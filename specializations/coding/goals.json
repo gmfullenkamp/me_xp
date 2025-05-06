@@ -3,7 +3,7 @@
     "tiers": [
       {
         "tier": 1,
-        "level_range": [1, 10],
+        "level_range": [0, 9],
         "goals": [
           {"name": "Write a 'Hello World' script", "xp": 10},
           {"name": "Set up a GitHub repository", "xp": 12},
@@ -13,7 +13,7 @@
       },
       {
         "tier": 2,
-        "level_range": [11, 20],
+        "level_range": [10, 19],
         "goals": [
           {"name": "Create a basic calculator app", "xp": 18},
           {"name": "Use functions in your code", "xp": 15},
@@ -23,7 +23,7 @@
       },
       {
         "tier": 3,
-        "level_range": [21, 30],
+        "level_range": [20, 29],
         "goals": [
           {"name": "Make a basic webpage using HTML/CSS", "xp": 25},
           {"name": "Use a loop and conditional together", "xp": 22},
@@ -33,7 +33,7 @@
       },
       {
         "tier": 4,
-        "level_range": [31, 40],
+        "level_range": [30, 39],
         "goals": [
           {"name": "Build a simple CRUD web app", "xp": 40},
           {"name": "Connect to a public API", "xp": 38},
@@ -43,7 +43,7 @@
       },
       {
         "tier": 5,
-        "level_range": [41, 50],
+        "level_range": [40, 49],
         "goals": [
           {"name": "Use a SQL or NoSQL database", "xp": 55},
           {"name": "Deploy an app to the cloud", "xp": 60},
@@ -53,7 +53,7 @@
       },
       {
         "tier": 6,
-        "level_range": [51, 60],
+        "level_range": [50, 59],
         "goals": [
           {"name": "Learn and apply OOP principles", "xp": 65},
           {"name": "Write and pass integration tests", "xp": 60},
@@ -63,7 +63,7 @@
       },
       {
         "tier": 7,
-        "level_range": [61, 70],
+        "level_range": [60, 69],
         "goals": [
           {"name": "Build a RESTful API from scratch", "xp": 80},
           {"name": "Create a real-time app using sockets", "xp": 85},
@@ -73,7 +73,7 @@
       },
       {
         "tier": 8,
-        "level_range": [71, 80],
+        "level_range": [70, 79],
         "goals": [
           {"name": "Build a full-stack project", "xp": 100},
           {"name": "Create a web scraper with pagination", "xp": 90},
@@ -83,7 +83,7 @@
       },
       {
         "tier": 9,
-        "level_range": [81, 90],
+        "level_range": [80, 89],
         "goals": [
           {"name": "Publish a Python package to PyPI", "xp": 110},
           {"name": "Solve a LeetCode Hard problem", "xp": 120},
@@ -93,7 +93,7 @@
       },
       {
         "tier": 10,
-        "level_range": [91, 100],
+        "level_range": [90, 100],
         "goals": [
           {"name": "Launch and maintain a live product", "xp": 150},
           {"name": "Create a technical blog or tutorial", "xp": 130},
