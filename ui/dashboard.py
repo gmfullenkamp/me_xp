@@ -61,11 +61,11 @@ class SpecializationTab(QWidget):
         super().__init__()
         self.specialization = specialization
         self.user_profile = user_profile
-        self.init_ui()
-
-    def init_ui(self):
         layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.populate_ui(layout)
 
+    def populate_ui(self, layout):
         level = self.specialization.progress["level"]
         xp = self.specialization.progress["xp"]
         xp_to_next = level * 100
@@ -99,7 +99,6 @@ class SpecializationTab(QWidget):
             toolbox.addItem(tier_widget, f"{emoji} Tier {tier['tier']}")
 
         layout.addWidget(toolbox)
-        self.setLayout(layout)
         self.setStyleSheet("background-color: #2e2e2e; color: white;")
 
     def complete_goal(self, goal_name):
@@ -109,11 +108,15 @@ class SpecializationTab(QWidget):
             return  # Already completed today, ignore
         awarded = self.specialization.complete_goal(goal_name)
         self.user_profile.save_specialization(self.specialization)
-        self.init_ui()  # Refresh UI
+        self.refresh()  # Refresh UI
     
     def refresh(self):
-        self.layout().deleteLater()
-        self.init_ui()
+        layout = self.layout()
+        while layout.count():
+            child = layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+        self.populate_ui(layout)
 
 class MeXPApp(QWidget):
     def __init__(self):
