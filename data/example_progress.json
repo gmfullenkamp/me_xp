@@ -1,0 +1,22 @@
+{
+    "specializations": {
+        "Running": {
+        "xp": 35,
+        "level": 1,
+        "completed": {
+            "Walk 1 mile": [
+            "2025-05-05"
+            ],
+            "Stretch for 5 minutes before a run": [
+            "2025-05-05"
+            ],
+            "Complete a 10-minute walk": [
+            "2025-05-05"
+            ],
+            "Jog for 5 minutes continuously": [
+            "2025-05-05"
+            ]
+        }
+        }
+    }
+}

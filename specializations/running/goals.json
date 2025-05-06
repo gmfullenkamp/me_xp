@@ -3,7 +3,7 @@
     "tiers": [
       {
         "tier": 1,
-        "level_range": [1, 10],
+        "level_range": [0, 9],
         "goals": [
           {"name": "Walk 1 mile", "xp": 10},
           {"name": "Stretch for 5 minutes before a run", "xp": 5},
@@ -13,7 +13,7 @@
       },
       {
         "tier": 2,
-        "level_range": [11, 20],
+        "level_range": [10, 19],
         "goals": [
           {"name": "Run 1 mile", "xp": 20},
           {"name": "Stretch for 10 minutes after a run", "xp": 10},
@@ -23,7 +23,7 @@
       },
       {
         "tier": 3,
-        "level_range": [21, 30],
+        "level_range": [20, 29],
         "goals": [
           {"name": "Run 2 miles", "xp": 30},
           {"name": "Complete a 20-minute run", "xp": 35},
@@ -33,7 +33,7 @@
       },
       {
         "tier": 4,
-        "level_range": [31, 40],
+        "level_range": [30, 39],
         "goals": [
           {"name": "Run for 30 minutes", "xp": 50},
           {"name": "Do 5 hill sprints", "xp": 45},
@@ -43,7 +43,7 @@
       },
       {
         "tier": 5,
-        "level_range": [41, 50],
+        "level_range": [40, 49],
         "goals": [
           {"name": "Run 3 miles", "xp": 60},
           {"name": "Run for 40 minutes", "xp": 65},
@@ -53,7 +53,7 @@
       },
       {
         "tier": 6,
-        "level_range": [51, 60],
+        "level_range": [50, 59],
         "goals": [
           {"name": "Run 4 miles", "xp": 80},
           {"name": "Do 4x400m intervals", "xp": 85},
@@ -63,7 +63,7 @@
       },
       {
         "tier": 7,
-        "level_range": [61, 70],
+        "level_range": [60, 69],
         "goals": [
           {"name": "Run 5 miles", "xp": 100},
           {"name": "Run in early morning (before 6:30am)", "xp": 75},
@@ -73,7 +73,7 @@
       },
       {
         "tier": 8,
-        "level_range": [71, 80],
+        "level_range": [70, 79],
         "goals": [
           {"name": "Run 6 miles", "xp": 125},
           {"name": "Do a tempo run (20 min at steady effort)", "xp": 130},
@@ -83,7 +83,7 @@
       },
       {
         "tier": 9,
-        "level_range": [81, 90],
+        "level_range": [80, 89],
         "goals": [
           {"name": "Run 7 miles", "xp": 160},
           {"name": "Run for 75 minutes", "xp": 170},
@@ -93,7 +93,7 @@
       },
       {
         "tier": 10,
-        "level_range": [91, 100],
+        "level_range": [90, 100],
         "goals": [
           {"name": "Run 10 miles", "xp": 200},
           {"name": "Complete a 90-minute run", "xp": 220},

@@ -1,0 +1,106 @@
+{
+    "specialization": "Coding",
+    "tiers": [
+      {
+        "tier": 1,
+        "level_range": [1, 10],
+        "goals": [
+          {"name": "Write a 'Hello World' script", "xp": 10},
+          {"name": "Set up a GitHub repository", "xp": 12},
+          {"name": "Commit and push a code change", "xp": 10},
+          {"name": "Install a code editor or IDE", "xp": 8}
+        ]
+      },
+      {
+        "tier": 2,
+        "level_range": [11, 20],
+        "goals": [
+          {"name": "Create a basic calculator app", "xp": 18},
+          {"name": "Use functions in your code", "xp": 15},
+          {"name": "Fix a bug you encountered", "xp": 16},
+          {"name": "Write and run a unit test", "xp": 20}
+        ]
+      },
+      {
+        "tier": 3,
+        "level_range": [21, 30],
+        "goals": [
+          {"name": "Make a basic webpage using HTML/CSS", "xp": 25},
+          {"name": "Use a loop and conditional together", "xp": 22},
+          {"name": "Refactor code to improve clarity", "xp": 24},
+          {"name": "Use a version control branch", "xp": 28}
+        ]
+      },
+      {
+        "tier": 4,
+        "level_range": [31, 40],
+        "goals": [
+          {"name": "Build a simple CRUD web app", "xp": 40},
+          {"name": "Connect to a public API", "xp": 38},
+          {"name": "Submit a PR or contribute to open source", "xp": 45},
+          {"name": "Use a debugger to fix a complex issue", "xp": 35}
+        ]
+      },
+      {
+        "tier": 5,
+        "level_range": [41, 50],
+        "goals": [
+          {"name": "Use a SQL or NoSQL database", "xp": 55},
+          {"name": "Deploy an app to the cloud", "xp": 60},
+          {"name": "Automate a daily task with code", "xp": 50},
+          {"name": "Write modular, reusable code", "xp": 48}
+        ]
+      },
+      {
+        "tier": 6,
+        "level_range": [51, 60],
+        "goals": [
+          {"name": "Learn and apply OOP principles", "xp": 65},
+          {"name": "Write and pass integration tests", "xp": 60},
+          {"name": "Use CI/CD in a project", "xp": 70},
+          {"name": "Create or use a Python package", "xp": 68}
+        ]
+      },
+      {
+        "tier": 7,
+        "level_range": [61, 70],
+        "goals": [
+          {"name": "Build a RESTful API from scratch", "xp": 80},
+          {"name": "Create a real-time app using sockets", "xp": 85},
+          {"name": "Solve a LeetCode Medium problem", "xp": 75},
+          {"name": "Use a container like Docker", "xp": 78}
+        ]
+      },
+      {
+        "tier": 8,
+        "level_range": [71, 80],
+        "goals": [
+          {"name": "Build a full-stack project", "xp": 100},
+          {"name": "Create a web scraper with pagination", "xp": 90},
+          {"name": "Use threading or multiprocessing", "xp": 95},
+          {"name": "Design and apply software architecture patterns", "xp": 105}
+        ]
+      },
+      {
+        "tier": 9,
+        "level_range": [81, 90],
+        "goals": [
+          {"name": "Publish a Python package to PyPI", "xp": 110},
+          {"name": "Solve a LeetCode Hard problem", "xp": 120},
+          {"name": "Build a GUI application", "xp": 115},
+          {"name": "Optimize performance in an existing project", "xp": 125}
+        ]
+      },
+      {
+        "tier": 10,
+        "level_range": [91, 100],
+        "goals": [
+          {"name": "Launch and maintain a live product", "xp": 150},
+          {"name": "Create a technical blog or tutorial", "xp": 130},
+          {"name": "Lead a team/project with version control", "xp": 140},
+          {"name": "Open source a full feature-complete library or app", "xp": 160}
+        ]
+      }
+    ]
+  }
+  
