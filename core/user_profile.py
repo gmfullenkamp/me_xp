@@ -28,7 +28,7 @@ class UserProfile:
             self.data = json.load(f)
 
     def get_specialization(self, name):
-        goal_path = resource_path(f"specializations/{name.lower()}/goals.json")
+        goal_path = resource_path(f"specializations/{name.lower()}_goals.json")
         return Specialization(name, goal_path, self.data["specializations"])
 
     def save_specialization(self, specialization):

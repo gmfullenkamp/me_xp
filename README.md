@@ -24,16 +24,16 @@ Each specialization (e.g., **Running**) has:
 
 | **Tier**       | **Level Range** | **Goal Examples**                                      | **XP Range** |
 |----------------|------------------|--------------------------------------------------------|--------------|
-| Tier 1: Beginner       | 1–10             | Walk 1 mile, Jog 5 min, 5,000 steps/day                | 10–25 XP     |
-| Tier 2: Novice         | 11–20            | Run 1 mile nonstop, Jog 20 min, Sprint intervals       | 30–50 XP     |
-| Tier 3: Intermediate   | 21–30            | Run 3 miles, Timed mile, Interval sprints              | 60–90 XP     |
-| Tier 4: Skilled        | 31–40            | 10k run, Hill sessions, Beat your 5k PR                | 100–140 XP   |
-| Tier 5: Advanced       | 41–50            | Half-marathon, 30km/week total, Fasted runs            | 150–200 XP   |
-| Tier 6: Expert         | 51–60            | Sub-7 mile, Heart rate control run, 100mi/month goal   | 220–300 XP   |
-| Tier 7: Elite          | 61–70            | 25km trail run, Competitive 10k, Negative splits        | 310–400 XP   |
-| Tier 8: Pro            | 71–80            | Marathon prep, Altitude training, Consistency streak   | 420–500 XP   |
-| Tier 9: Champion       | 81–90            | Marathon race, 50k ultramarathon, Coach a runner       | 550–700 XP   |
-| Tier 10: Master        | 91–100           | Multi-day race, 100k+ ultra, Lead a running club       | 750–1000 XP  |
+| Tier 1: Beginner       | 0–9             | Walk 1 mile, Jog 5 min, 5,000 steps/day                | 10–25 XP     |
+| Tier 2: Novice         | 10–19            | Run 1 mile nonstop, Jog 20 min, Sprint intervals       | 30–50 XP     |
+| Tier 3: Intermediate   | 20–29            | Run 3 miles, Timed mile, Interval sprints              | 60–90 XP     |
+| Tier 4: Skilled        | 30–39            | 10k run, Hill sessions, Beat your 5k PR                | 100–140 XP   |
+| Tier 5: Advanced       | 40–49            | Half-marathon, 30km/week total, Fasted runs            | 150–200 XP   |
+| Tier 6: Expert         | 50–59            | Sub-7 mile, Heart rate control run, 100mi/month goal   | 220–300 XP   |
+| Tier 7: Elite          | 60–69            | 25km trail run, Competitive 10k, Negative splits        | 310–400 XP   |
+| Tier 8: Pro            | 70–79            | Marathon prep, Altitude training, Consistency streak   | 420–500 XP   |
+| Tier 9: Champion       | 80–89            | Marathon race, 50k ultramarathon, Coach a runner       | 550–700 XP   |
+| Tier 10: Master        | 90–100           | Multi-day race, 100k+ ultra, Lead a running club       | 750–1000 XP  |
 
 > Every specialization follows a similar tiered system with its own tailored goals and challenges.
 

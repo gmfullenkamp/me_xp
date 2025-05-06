@@ -1,5 +1,6 @@
 import os
 import sys
+from glob import glob
 from datetime import datetime
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QLabel, QProgressBar, QCheckBox,
@@ -139,12 +140,11 @@ class MeXPApp(QWidget):
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("QTabBar::tab { background: #444; color: white; padding: 10px; } QTabBar::tab:selected { background: #666; }")
 
-        for filename in os.listdir(resource_path("specializations")):
-            if os.path.isdir(os.path.join(resource_path("specializations"), filename)):
-                spec_name = filename.capitalize()
-                spec = self.user_profile.get_specialization(spec_name)
-                tab = SpecializationTab(spec, self.user_profile)
-                self.tabs.addTab(tab, spec_name)
+        for filename in glob(os.path.join(resource_path("specializations"), "*_goals.json")):
+            spec_name = os.path.basename(filename.split("_goals.json")[0])
+            spec = self.user_profile.get_specialization(spec_name)
+            tab = SpecializationTab(spec, self.user_profile)
+            self.tabs.addTab(tab, spec_name)
 
         layout.addWidget(self.tabs)
 

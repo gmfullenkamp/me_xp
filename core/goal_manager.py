@@ -3,7 +3,7 @@ import os
 import sys
 
 class GoalManager:
-    def __init__(self, path="specializations/running/goals.json"):
+    def __init__(self, path):
         with open(path, 'r') as f:
             self.goals_data = json.load(f)
 

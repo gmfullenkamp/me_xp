@@ -1,0 +1,106 @@
+{
+    "specialization": "Piano",
+    "tiers": [
+      {
+        "tier": 1,
+        "level_range": [0, 9],
+        "goals": [
+          {"name": "Identify all the piano keys", "xp": 10},
+          {"name": "Play C major scale with one hand", "xp": 12},
+          {"name": "Learn finger numbers (1-5)", "xp": 8},
+          {"name": "Practice posture and hand shape", "xp": 10}
+        ]
+      },
+      {
+        "tier": 2,
+        "level_range": [10, 19],
+        "goals": [
+          {"name": "Play C and G major scales hands separately", "xp": 15},
+          {"name": "Learn to read basic sheet music (treble clef)", "xp": 18},
+          {"name": "Play a simple melody with right hand", "xp": 20},
+          {"name": "Practice rhythm with a metronome", "xp": 12}
+        ]
+      },
+      {
+        "tier": 3,
+        "level_range": [20, 29],
+        "goals": [
+          {"name": "Play both hands together in a simple piece", "xp": 25},
+          {"name": "Learn and play F major scale", "xp": 22},
+          {"name": "Sight-read an easy piece", "xp": 28},
+          {"name": "Memorize a short song", "xp": 30}
+        ]
+      },
+      {
+        "tier": 4,
+        "level_range": [30, 39],
+        "goals": [
+          {"name": "Practice chords (C, F, G major)", "xp": 35},
+          {"name": "Learn a beginner classical piece", "xp": 40},
+          {"name": "Use pedal effectively in a piece", "xp": 38},
+          {"name": "Record and critique your performance", "xp": 32}
+        ]
+      },
+      {
+        "tier": 5,
+        "level_range": [40, 49],
+        "goals": [
+          {"name": "Play with expressive dynamics", "xp": 45},
+          {"name": "Transpose a simple piece to another key", "xp": 48},
+          {"name": "Play a duet with another pianist", "xp": 50},
+          {"name": "Learn a popular song by ear", "xp": 55}
+        ]
+      },
+      {
+        "tier": 6,
+        "level_range": [50, 59],
+        "goals": [
+          {"name": "Play a piece in a minor key", "xp": 60},
+          {"name": "Master a piece with complex rhythm", "xp": 65},
+          {"name": "Improvise over a chord progression", "xp": 68},
+          {"name": "Learn and play a jazz standard", "xp": 70}
+        ]
+      },
+      {
+        "tier": 7,
+        "level_range": [60, 69],
+        "goals": [
+          {"name": "Accompany yourself or someone else singing", "xp": 75},
+          {"name": "Perform a piece from memory in front of someone", "xp": 80},
+          {"name": "Write your own simple composition", "xp": 85},
+          {"name": "Play a piece with tempo changes (rubato/ritardando)", "xp": 78}
+        ]
+      },
+      {
+        "tier": 8,
+        "level_range": [70, 79],
+        "goals": [
+          {"name": "Play an intermediate classical piece", "xp": 90},
+          {"name": "Record a performance for YouTube or social media", "xp": 100},
+          {"name": "Master a full sonatina or short suite", "xp": 95},
+          {"name": "Experiment with improvisation in different genres", "xp": 105}
+        ]
+      },
+      {
+        "tier": 9,
+        "level_range": [80, 89],
+        "goals": [
+          {"name": "Play a full advanced level piece", "xp": 120},
+          {"name": "Accompany a full-length song with vocals", "xp": 125},
+          {"name": "Reharmonize a known melody", "xp": 115},
+          {"name": "Participate in a local recital or jam session", "xp": 130}
+        ]
+      },
+      {
+        "tier": 10,
+        "level_range": [90, 100],
+        "goals": [
+          {"name": "Learn and perform a piece by Chopin, Liszt, or similar", "xp": 150},
+          {"name": "Write and notate an original piano composition", "xp": 160},
+          {"name": "Play an entire 3-movement sonata", "xp": 180},
+          {"name": "Teach someone else a piano piece", "xp": 170}
+        ]
+      }
+    ]
+  }
+  
