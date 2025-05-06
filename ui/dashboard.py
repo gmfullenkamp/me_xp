@@ -3,7 +3,8 @@ import sys
 from datetime import datetime
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QLabel, QProgressBar, QCheckBox,
-    QTabWidget, QScrollArea, QHBoxLayout, QGroupBox, QToolBox
+    QTabWidget, QScrollArea, QHBoxLayout, QGroupBox, QToolBox, QPushButton,
+    QMessageBox, QDialog, QLineEdit
 )
 from PyQt5.QtGui import QPalette, QColor, QIcon
 from PyQt5.QtCore import Qt
@@ -146,8 +147,77 @@ class MeXPApp(QWidget):
                 self.tabs.addTab(tab, spec_name)
 
         layout.addWidget(self.tabs)
+
+        top_bar = QHBoxLayout()
+        top_bar.addStretch()  # Push the button to the right
+
+        reset_button = QPushButton("Reset XP")
+        reset_button.setStyleSheet("background-color: red; color: white; font-weight: bold; padding: 10px;")
+        reset_button.clicked.connect(self.confirm_reset_xp)
+        top_bar.addWidget(reset_button)
+
+        layout.insertLayout(0, top_bar)
+
         self.setLayout(layout)
         self.setStyleSheet("background-color: #2e2e2e; color: white;")
+
+    def confirm_reset_xp(self):
+        self.reset_warnings = [
+            "This will wipe your journey. Like Thanos, but with less flair.",
+            "All your XP will be gone. Like your gym gains after Thanksgiving.",
+            "You sure you want to throw it all away like a soggy taco?",
+            "Even your best streak? Poof. Gone.",
+            "Imagine deleting your life's save file. That's what you're doing.",
+            "Once upon a time, you were a hero. Now? A potato.",
+            "Warning: Resetting XP may cause existential dread.",
+            "This is your 8th warning. Nobody goes this far accidentally.",
+            "Your XP called. It doesn’t want to go.",
+            "Final warning: You’re about to nuke everything. Type 'YES'."
+        ]
+        self.current_warning_index = 0
+        self.show_next_reset_dialog()
+
+    def show_next_reset_dialog(self):
+        if self.current_warning_index >= len(self.reset_warnings):
+            self.user_profile.reset_all_data()
+            QMessageBox.information(self, "XP Reset", "All XP and progress has been obliterated. Good luck, hero.")
+            # Reinitialize the UI by reloading the profile and tabs
+            self.user_profile = UserProfile()  # Reloads data (now empty)
+            self.tabs.clear()  # Remove old tabs
+            for filename in os.listdir(resource_path("specializations")):
+                if os.path.isdir(os.path.join(resource_path("specializations"), filename)):
+                    spec_name = filename.capitalize()
+                    spec = self.user_profile.get_specialization(spec_name)
+                    tab = SpecializationTab(spec, self.user_profile)
+                    self.tabs.addTab(tab, spec_name)
+            return
+
+        dialog = QDialog(self)
+        dialog.setWindowTitle(f"Confirmation {self.current_warning_index + 1}/10")
+
+        layout = QVBoxLayout()
+        label = QLabel(self.reset_warnings[self.current_warning_index])
+        input_box = QLineEdit()
+        input_box.setPlaceholderText("Type YES to confirm")
+        ok_button = QPushButton("Confirm")
+
+        layout.addWidget(label)
+        layout.addWidget(input_box)
+        layout.addWidget(ok_button)
+        dialog.setLayout(layout)
+
+        def handle_confirm():
+            if input_box.text().strip().upper() == "YES":
+                self.current_warning_index += 1
+                dialog.accept()
+                self.show_next_reset_dialog()
+            else:
+                QMessageBox.warning(self, "Cancelled", "Reset aborted. XP remains intact.")
+                dialog.reject()
+
+        ok_button.clicked.connect(handle_confirm)
+        dialog.exec_()
+
 
 def set_dark_mode(app):
     palette = QPalette()

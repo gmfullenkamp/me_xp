@@ -18,6 +18,7 @@ def get_appdata_path():
 class UserProfile:
     def __init__(self):
         self.path = get_appdata_path()
+        self.data = {}
         self._load()
 
     def _load(self):
@@ -37,3 +38,8 @@ class UserProfile:
     def _save(self):
         with open(self.path, 'w') as f:
             json.dump(self.data, f, indent=2)
+
+    def reset_all_data(self):
+        self.data = {}
+        self.data["specializations"] = {}
+        self._save()
