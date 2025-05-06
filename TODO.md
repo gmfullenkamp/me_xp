@@ -7,3 +7,4 @@
 6. Make a separate 'Add Specialization' button so old users can pick up new specializations if they want.
 7. Make a separate 'Remove Specialization' button so old users can remove old specializations that they never really cared about. (Be sure to warn them of their lost XP!)
 8. Make a randomized welcoming slogan at the top in large bold letters for the user whenver they open the app (randomized).
+10. Add a 'total times complete' in with the streaks stats for each goal.
