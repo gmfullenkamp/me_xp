@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 class Specialization:
     def __init__(self, name, goals_path, progress):

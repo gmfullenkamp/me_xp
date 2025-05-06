@@ -1,3 +1,5 @@
+import os
+import sys
 from datetime import datetime
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QLabel, QProgressBar, QCheckBox,
@@ -17,6 +19,11 @@ def get_streak_emoji(streak):
 
 def get_multiplier(streak):
     return 1.0 + 0.1 * min(streak, 10)
+
+def resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller"""
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
 
 class GoalWidget(QWidget):
     def __init__(self, goal, on_complete, parent_tab):
@@ -126,13 +133,11 @@ class MeXPApp(QWidget):
 
     def init_ui(self):
         self.setWindowTitle("🌌 Me XP Tracker")
-        self.setWindowIcon(QIcon("assets/icon.ico"))
+        self.setWindowIcon(QIcon(resource_path(os.path.join(os.getcwd(), "assets", "icon.ico"))))
         layout = QVBoxLayout()
 
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("QTabBar::tab { background: #444; color: white; padding: 10px; } QTabBar::tab:selected { background: #666; }")
-
-        import os
 
         for filename in os.listdir("specializations"):
             if os.path.isdir(os.path.join("specializations", filename)):
