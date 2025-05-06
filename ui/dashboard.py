@@ -22,8 +22,7 @@ def get_multiplier(streak):
 
 def resource_path(relative_path):
     """Get absolute path to resource, works for dev and for PyInstaller"""
-    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
-    return os.path.join(base_path, relative_path)
+    return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")), relative_path)
 
 class GoalWidget(QWidget):
     def __init__(self, goal, on_complete, parent_tab):
@@ -132,15 +131,15 @@ class MeXPApp(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        self.setWindowTitle("🌌 Me XP Tracker")
-        self.setWindowIcon(QIcon(resource_path(os.path.join(os.getcwd(), "assets", "icon.ico"))))
+        self.setWindowTitle("Me XP")
+        self.setWindowIcon(QIcon(resource_path("assets/icon.ico")))
         layout = QVBoxLayout()
 
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("QTabBar::tab { background: #444; color: white; padding: 10px; } QTabBar::tab:selected { background: #666; }")
 
-        for filename in os.listdir("specializations"):
-            if os.path.isdir(os.path.join("specializations", filename)):
+        for filename in os.listdir(resource_path("specializations")):
+            if os.path.isdir(os.path.join(resource_path("specializations"), filename)):
                 spec_name = filename.capitalize()
                 spec = self.user_profile.get_specialization(spec_name)
                 tab = SpecializationTab(spec, self.user_profile)
