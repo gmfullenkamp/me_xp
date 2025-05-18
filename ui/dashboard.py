@@ -4,13 +4,14 @@ import random
 from glob import glob
 from datetime import datetime
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QLabel, QProgressBar, QCheckBox,
-    QTabWidget, QScrollArea, QHBoxLayout, QGroupBox, QToolBox, QPushButton,
+    QWidget, QVBoxLayout, QLabel, QProgressBar, QCheckBox,
+    QTabWidget, QHBoxLayout, QToolBox, QPushButton,
     QMessageBox, QDialog, QLineEdit
 )
 from PyQt5.QtGui import QPalette, QColor, QIcon
 from PyQt5.QtCore import Qt
 from core.user_profile import UserProfile
+from ui.character_stats import DnDCharacterSheet
 
 TIER_EMOJIS = {
     1: "🌱", 2: "🏃", 3: "🔥", 4: "💪", 5: "🚀",
@@ -137,6 +138,9 @@ class MeXPApp(QWidget):
         self.setWindowTitle("Me XP")
         self.setWindowIcon(QIcon(resource_path("assets/icon.ico")))
         layout = QVBoxLayout()
+
+        self.dnd_sheet = DnDCharacterSheet(self.user_profile)
+        layout.addWidget(self.dnd_sheet)
 
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("QTabBar::tab { background: #444; color: white; padding: 10px; } QTabBar::tab:selected { background: #666; }")

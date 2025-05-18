@@ -6,6 +6,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     set_dark_mode(app)
     window = MeXPApp()
-    window.resize(800, 600)
+    window.resize(800, 1000)
     window.show()
     sys.exit(app.exec_())
