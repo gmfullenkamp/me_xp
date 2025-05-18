@@ -1,106 +1,327 @@
 {
-    "specialization": "Coding",
-    "tiers": [
-      {
-        "tier": 1,
-        "level_range": [0, 9],
-        "goals": [
-          {"name": "Write a 'Hello World' script", "xp": 10},
-          {"name": "Set up a GitHub repository", "xp": 12},
-          {"name": "Commit and push a code change", "xp": 10},
-          {"name": "Install a code editor or IDE", "xp": 8}
-        ]
-      },
-      {
-        "tier": 2,
-        "level_range": [10, 19],
-        "goals": [
-          {"name": "Create a basic calculator app", "xp": 18},
-          {"name": "Use functions in your code", "xp": 15},
-          {"name": "Fix a bug you encountered", "xp": 16},
-          {"name": "Write and run a unit test", "xp": 20}
-        ]
-      },
-      {
-        "tier": 3,
-        "level_range": [20, 29],
-        "goals": [
-          {"name": "Make a basic webpage using HTML/CSS", "xp": 25},
-          {"name": "Use a loop and conditional together", "xp": 22},
-          {"name": "Refactor code to improve clarity", "xp": 24},
-          {"name": "Use a version control branch", "xp": 28}
-        ]
-      },
-      {
-        "tier": 4,
-        "level_range": [30, 39],
-        "goals": [
-          {"name": "Build a simple CRUD web app", "xp": 40},
-          {"name": "Connect to a public API", "xp": 38},
-          {"name": "Submit a PR or contribute to open source", "xp": 45},
-          {"name": "Use a debugger to fix a complex issue", "xp": 35}
-        ]
-      },
-      {
-        "tier": 5,
-        "level_range": [40, 49],
-        "goals": [
-          {"name": "Use a SQL or NoSQL database", "xp": 55},
-          {"name": "Deploy an app to the cloud", "xp": 60},
-          {"name": "Automate a daily task with code", "xp": 50},
-          {"name": "Write modular, reusable code", "xp": 48}
-        ]
-      },
-      {
-        "tier": 6,
-        "level_range": [50, 59],
-        "goals": [
-          {"name": "Learn and apply OOP principles", "xp": 65},
-          {"name": "Write and pass integration tests", "xp": 60},
-          {"name": "Use CI/CD in a project", "xp": 70},
-          {"name": "Create or use a Python package", "xp": 68}
-        ]
-      },
-      {
-        "tier": 7,
-        "level_range": [60, 69],
-        "goals": [
-          {"name": "Build a RESTful API from scratch", "xp": 80},
-          {"name": "Create a real-time app using sockets", "xp": 85},
-          {"name": "Solve a LeetCode Medium problem", "xp": 75},
-          {"name": "Use a container like Docker", "xp": 78}
-        ]
-      },
-      {
-        "tier": 8,
-        "level_range": [70, 79],
-        "goals": [
-          {"name": "Build a full-stack project", "xp": 100},
-          {"name": "Create a web scraper with pagination", "xp": 90},
-          {"name": "Use threading or multiprocessing", "xp": 95},
-          {"name": "Design and apply software architecture patterns", "xp": 105}
-        ]
-      },
-      {
-        "tier": 9,
-        "level_range": [80, 89],
-        "goals": [
-          {"name": "Publish a Python package to PyPI", "xp": 110},
-          {"name": "Solve a LeetCode Hard problem", "xp": 120},
-          {"name": "Build a GUI application", "xp": 115},
-          {"name": "Optimize performance in an existing project", "xp": 125}
-        ]
-      },
-      {
-        "tier": 10,
-        "level_range": [90, 100],
-        "goals": [
-          {"name": "Launch and maintain a live product", "xp": 150},
-          {"name": "Create a technical blog or tutorial", "xp": 130},
-          {"name": "Lead a team/project with version control", "xp": 140},
-          {"name": "Open source a full feature-complete library or app", "xp": 160}
-        ]
-      }
-    ]
-  }
-  
+  "specialization": "Coding",
+  "tiers": [
+    {
+      "tier": 1,
+      "level_range": [
+        0,
+        9
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Code for 10 minutes",
+          "xp": 5
+        },
+        {
+          "name": "[Intermediate] Code for 30 minutes",
+          "xp": 10
+        },
+        {
+          "name": "[Advanced] Code for 1 hour",
+          "xp": 15
+        },
+        {
+          "name": "Watch a beginner programming tutorial",
+          "xp": 5
+        },
+        {
+          "name": "Learn a new data type (int, str, list, ...)",
+          "xp": 8
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "level_range": [
+        10,
+        19
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Code for 1 hour",
+          "xp": 15
+        },
+        {
+          "name": "[Intermediate] Code for 2 hours",
+          "xp": 20
+        },
+        {
+          "name": "[Advanced] Code for 3 hours",
+          "xp": 30
+        },
+        {
+          "name": "Write a program that takes user input",
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "level_range": [
+        20,
+        29
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Code for 2 hours",
+          "xp": 20
+        },
+        {
+          "name": "[Intermediate] Code for 3 hours",
+          "xp": 30
+        },
+        {
+          "name": "[Advanced] Code for 4 hours",
+          "xp": 40
+        },
+        {
+          "name": "Write a function with parameters",
+          "xp": 15
+        },
+        {
+          "name": "Use a new library/module (e.g., math, random)",
+          "xp": 15
+        },
+        {
+          "name": "Document your code with comments and doc strings",
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "tier": 4,
+      "level_range": [
+        30,
+        39
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Code for 3 hours",
+          "xp": 30
+        },
+        {
+          "name": "[Intermediate] Code for 5 hours",
+          "xp": 45
+        },
+        {
+          "name": "[Advanced] Build a small script/app",
+          "xp": 60
+        },
+        {
+          "name": "Use version control (Git)",
+          "xp": 25
+        },
+        {
+          "name": "Refactor an old script to improve it",
+          "xp": 35
+        },
+        {
+          "name": "Write unit tests for your functions",
+          "xp": 30
+        }
+      ]
+    },
+    {
+      "tier": 5,
+      "level_range": [
+        40,
+        49
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Build a script that scrapes a website",
+          "xp": 50
+        },
+        {
+          "name": "[Intermediate] Work on a personal project for 4 hours",
+          "xp": 60
+        },
+        {
+          "name": "[Advanced] Build a command-line app",
+          "xp": 75
+        },
+        {
+          "name": "Push code to a GitHub repo",
+          "xp": 20
+        },
+        {
+          "name": "Collaborate with someone on code",
+          "xp": 45
+        },
+        {
+          "name": "Use classes and objects",
+          "xp": 50
+        }
+      ]
+    },
+    {
+      "tier": 6,
+      "level_range": [
+        50,
+        59
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Code for 6 hours in a day",
+          "xp": 70
+        },
+        {
+          "name": "[Intermediate] Build a basic GUI app",
+          "xp": 80
+        },
+        {
+          "name": "[Advanced] Work on a team project",
+          "xp": 90
+        },
+        {
+          "name": "Use APIs in a project",
+          "xp": 60
+        },
+        {
+          "name": "Deploy a script as a web service",
+          "xp": 85
+        },
+        {
+          "name": "Optimize code performance",
+          "xp": 70
+        },
+        {
+          "name": "Document a full project",
+          "xp": 60
+        }
+      ]
+    },
+    {
+      "tier": 7,
+      "level_range": [
+        60,
+        69
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Build an automation script",
+          "xp": 75
+        },
+        {
+          "name": "[Intermediate] Create a multi-file Python project",
+          "xp": 85
+        },
+        {
+          "name": "[Advanced] Write integration tests",
+          "xp": 95
+        },
+        {
+          "name": "Use async/await or multithreading",
+          "xp": 90
+        },
+        {
+          "name": "Build a local database app",
+          "xp": 100
+        },
+        {
+          "name": "Set up continuous integration (CI)",
+          "xp": 95
+        }
+      ]
+    },
+    {
+      "tier": 8,
+      "level_range": [
+        70,
+        79
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Code 5 days in a week",
+          "xp": 110
+        },
+        {
+          "name": "[Intermediate] Build and deploy a web app",
+          "xp": 125
+        },
+        {
+          "name": "[Advanced] Contribute to an open-source repo",
+          "xp": 140
+        },
+        {
+          "name": "Build a REST API",
+          "xp": 120
+        },
+        {
+          "name": "Write detailed project documentation",
+          "xp": 100
+        },
+        {
+          "name": "Work on a project with GitHub Issues/PRs",
+          "xp": 130
+        },
+        {
+          "name": "Build a test suite with coverage reports",
+          "xp": 110
+        }
+      ]
+    },
+    {
+      "tier": 9,
+      "level_range": [
+        80,
+        89
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Build an ML model using scikit-learn",
+          "xp": 160
+        },
+        {
+          "name": "[Intermediate] Refactor a legacy codebase",
+          "xp": 170
+        },
+        {
+          "name": "[Advanced] Build a CI/CD pipeline",
+          "xp": 180
+        },
+        {
+          "name": "Design and implement a scalable system",
+          "xp": 170
+        },
+        {
+          "name": "Work on an advanced data project",
+          "xp": 165
+        }
+      ]
+    },
+    {
+      "tier": 10,
+      "level_range": [
+        90,
+        100
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Complete a 30-day coding streak",
+          "xp": 200
+        },
+        {
+          "name": "[Intermediate] Build a production-ready app",
+          "xp": 230
+        },
+        {
+          "name": "[Advanced] Lead a team on a software project",
+          "xp": 250
+        },
+        {
+          "name": "Give a tech talk or presentation",
+          "xp": 210
+        },
+        {
+          "name": "Start a complex full-stack project",
+          "xp": 240
+        },
+        {
+          "name": "Build something you\u2019ve always dreamed of",
+          "xp": 300
+        }
+      ]
+    }
+  ]
+}

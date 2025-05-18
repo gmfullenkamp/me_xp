@@ -1,0 +1,258 @@
+{
+  "specialization": "Health & Habits",
+  "tiers": [
+    {
+      "tier": 1,
+      "level_range": [
+        0,
+        9
+      ],
+      "goals": [
+        {
+          "name": "Wear your retainers today",
+          "xp": 5
+        },
+        {
+          "name": "Drink at least 20oz of water",
+          "xp": 5
+        },
+        {
+          "name": "Don't drink caffeine today",
+          "xp": 8
+        },
+        {
+          "name": "Avoid watching porn today",
+          "xp": 8
+        },
+        {
+          "name": "Avoid buying junk food today",
+          "xp": 6
+        },
+        {
+          "name": "Brush and floss your teeth",
+          "xp": 5
+        },
+        {
+          "name": "Sit on the couch for less than 4 hours",
+          "xp": 7
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "level_range": [
+        10,
+        19
+      ],
+      "goals": [
+        {
+          "name": "Drink 50oz+ water today",
+          "xp": 12
+        },
+        {
+          "name": "Don't drink alcohol today",
+          "xp": 10
+        },
+        {
+          "name": "No screens in bed today",
+          "xp": 10
+        },
+        {
+          "name": "Stretch for 10 minutes",
+          "xp": 8
+        },
+        {
+          "name": "Avoid sugar snacks today",
+          "xp": 10
+        },
+        {
+          "name": "Wake up without snoozing",
+          "xp": 12
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "level_range": [
+        20,
+        29
+      ],
+      "goals": [
+        {
+          "name": "Keep couch time < 3 hours",
+          "xp": 15
+        },
+        {
+          "name": "Do a digital detox day (no social media)",
+          "xp": 18
+        },
+        {
+          "name": "Meditate for 10 minutes",
+          "xp": 15
+        },
+        {
+          "name": "Go to bed before 11pm",
+          "xp": 12
+        },
+        {
+          "name": "Don't buy another video game today",
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "tier": 4,
+      "level_range": [
+        30,
+        39
+      ],
+      "goals": [
+        {
+          "name": "Drink 64oz+ of water today",
+          "xp": 18
+        },
+        {
+          "name": "Cook your own meals today",
+          "xp": 20
+        },
+        {
+          "name": "Track all food and drink today",
+          "xp": 18
+        },
+        {
+          "name": "No screens 1 hour before bed",
+          "xp": 15
+        }
+      ]
+    },
+    {
+      "tier": 5,
+      "level_range": [
+        40,
+        49
+      ],
+      "goals": [
+        {
+          "name": "Take a 20-minute walk today",
+          "xp": 20
+        },
+        {
+          "name": "Fast for 12 hours (e.g., 8pm to 8am)",
+          "xp": 25
+        },
+        {
+          "name": "Complete a day without sugar",
+          "xp": 20
+        },
+        {
+          "name": "Spend at least 30 minutes outdoors",
+          "xp": 22
+        },
+        {
+          "name": "Take a cold shower today",
+          "xp": 20
+        }
+      ]
+    },
+    {
+      "tier": 6,
+      "level_range": [
+        50,
+        59
+      ],
+      "goals": [
+        {
+          "name": "Avoid caffeine, alcohol, porn, and sugar today",
+          "xp": 50
+        },
+        {
+          "name": "Track mood 3x today (morning, noon, night)",
+          "xp": 30
+        },
+        {
+          "name": "Do a mindful body scan meditation",
+          "xp": 35
+        },
+        {
+          "name": "Declutter your living space",
+          "xp": 30
+        },
+        {
+          "name": "Don't spend any money today",
+          "xp": 25
+        }
+      ]
+    },
+    {
+      "tier": 7,
+      "level_range": [
+        60,
+        69
+      ],
+      "goals": [
+        {
+          "name": "Maintain posture check-ins every hour",
+          "xp": 30
+        },
+        {
+          "name": "Complete a full day of digital minimalism",
+          "xp": 45
+        },
+        {
+          "name": "No TV or videos today",
+          "xp": 35
+        }
+      ]
+    },
+    {
+      "tier": 8,
+      "level_range": [
+        70,
+        79
+      ],
+      "goals": [
+        {
+          "name": "Complete a weekend retreat from tech",
+          "xp": 70
+        },
+        {
+          "name": "Meal prep healthy food for 3 days",
+          "xp": 60
+        },
+        {
+          "name": "Track 3 meals and all water intake",
+          "xp": 40
+        },
+        {
+          "name": "Start and finish a book",
+          "xp": 65
+        },
+        {
+          "name": "Spend 1 hour in nature",
+          "xp": 40
+        }
+      ]
+    },
+    {
+      "tier": 9,
+      "level_range": [
+        80,
+        89
+      ],
+      "goals": [
+        {
+          "name": "No processed foods for 3 days",
+          "xp": 70
+        },
+        {
+          "name": "Practice mindful eating for a full day",
+          "xp": 60
+        },
+        {
+          "name": "No news or social media for 48 hours",
+          "xp": 70
+        }
+      ]
+    }
+  ]
+}

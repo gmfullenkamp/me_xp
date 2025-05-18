@@ -1,0 +1,315 @@
+{
+  "specialization": "Piano",
+  "tiers": [
+    {
+      "tier": 1,
+      "level_range": [
+        0,
+        9
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Practice piano for 10 minutes",
+          "xp": 5
+        },
+        {
+          "name": "[Intermediate] Practice piano for 20 minutes",
+          "xp": 10
+        },
+        {
+          "name": "[Advanced] Practice piano for 30 minutes",
+          "xp": 15
+        },
+        {
+          "name": "Learn the names of the white keys",
+          "xp": 5
+        },
+        {
+          "name": "Play C major scale with one hand",
+          "xp": 8
+        },
+        {
+          "name": "Watch a beginner piano tutorial",
+          "xp": 5
+        },
+        {
+          "name": "Practice finger independence exercise",
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "level_range": [
+        10,
+        19
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Practice piano for 30 minutes",
+          "xp": 15
+        },
+        {
+          "name": "[Intermediate] Practice for 45 minutes",
+          "xp": 20
+        },
+        {
+          "name": "[Advanced] Practice for 1 hour",
+          "xp": 25
+        },
+        {
+          "name": "Play C major scale with both hands",
+          "xp": 12
+        },
+        {
+          "name": "Learn your first simple song (e.g., Twinkle Twinkle)",
+          "xp": 15
+        },
+        {
+          "name": "Practice hands separately on a new piece",
+          "xp": 10
+        },
+        {
+          "name": "Use a metronome while practicing",
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "level_range": [
+        20,
+        29
+      ],
+      "goals": [
+        {
+          "name": "[Intermediate] Practice scales in two keys",
+          "xp": 25
+        },
+        {
+          "name": "[Advanced] Play a full piece from memory",
+          "xp": 35
+        },
+        {
+          "name": "Record yourself and listen back",
+          "xp": 15
+        },
+        {
+          "name": "Learn a song with chords",
+          "xp": 25
+        },
+        {
+          "name": "Sight-read a new piece",
+          "xp": 20
+        },
+        {
+          "name": "Practice with dynamics (soft/loud)",
+          "xp": 15
+        }
+      ]
+    },
+    {
+      "tier": 4,
+      "level_range": [
+        30,
+        39
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Play 3 different scales",
+          "xp": 30
+        },
+        {
+          "name": "[Intermediate] Learn a classical piece",
+          "xp": 40
+        },
+        {
+          "name": "[Advanced] Practice for 90 minutes in one day",
+          "xp": 45
+        },
+        {
+          "name": "Learn proper pedaling technique",
+          "xp": 30
+        },
+        {
+          "name": "Work on left-hand accompaniment",
+          "xp": 35
+        },
+        {
+          "name": "Transpose a simple melody to a new key",
+          "xp": 30
+        },
+        {
+          "name": "Practice playing by ear",
+          "xp": 30
+        }
+      ]
+    },
+    {
+      "tier": 5,
+      "level_range": [
+        40,
+        49
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Learn 5 major scales",
+          "xp": 35
+        },
+        {
+          "name": "[Intermediate] Play hands together in new keys",
+          "xp": 45
+        },
+        {
+          "name": "Start a new multi-page piece",
+          "xp": 40
+        },
+        {
+          "name": "Improve phrasing in a piece",
+          "xp": 35
+        },
+        {
+          "name": "Learn a new rhythm pattern",
+          "xp": 30
+        }
+      ]
+    },
+    {
+      "tier": 6,
+      "level_range": [
+        50,
+        59
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Learn all 12 major scales",
+          "xp": 50
+        },
+        {
+          "name": "[Intermediate] Practice for 2 hours in a day",
+          "xp": 60
+        },
+        {
+          "name": "[Advanced] Memorize two complete pieces",
+          "xp": 70
+        },
+        {
+          "name": "Analyze a piece's chord structure",
+          "xp": 50
+        },
+        {
+          "name": "Use sheet music and play a new genre",
+          "xp": 45
+        },
+        {
+          "name": "Improve posture and finger technique",
+          "xp": 40
+        },
+        {
+          "name": "Practice with backing tracks",
+          "xp": 45
+        }
+      ]
+    },
+    {
+      "tier": 7,
+      "level_range": [
+        60,
+        69
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Practice jazz or blues scale",
+          "xp": 55
+        },
+        {
+          "name": "[Intermediate] Play an intermediate-level song fluently",
+          "xp": 65
+        },
+        {
+          "name": "[Advanced] Improvise over a chord progression",
+          "xp": 75
+        },
+        {
+          "name": "Create your own arrangement",
+          "xp": 60
+        }
+      ]
+    },
+    {
+      "tier": 8,
+      "level_range": [
+        70,
+        79
+      ],
+      "goals": [
+        {
+          "name": "[Intermediate] Learn an entire sonata",
+          "xp": 90
+        },
+        {
+          "name": "[Advanced] Compose an original piece",
+          "xp": 100
+        },
+        {
+          "name": "Play pieces from 3 different styles",
+          "xp": 85
+        },
+        {
+          "name": "Practice expressive phrasing",
+          "xp": 80
+        }
+      ]
+    },
+    {
+      "tier": 9,
+      "level_range": [
+        80,
+        89
+      ],
+      "goals": [
+        {
+          "name": "[Beginner] Revisit and perfect older pieces",
+          "xp": 80
+        },
+        {
+          "name": "[Intermediate] Learn a piece with fast passages",
+          "xp": 95
+        },
+        {
+          "name": "Play through an entire music book",
+          "xp": 100
+        },
+        {
+          "name": "Write a song with lyrics and piano",
+          "xp": 105
+        },
+        {
+          "name": "Transcribe a melody by ear",
+          "xp": 90
+        },
+        {
+          "name": "Analyze a complex classical piece",
+          "xp": 95
+        }
+      ]
+    },
+    {
+      "tier": 10,
+      "level_range": [
+        90,
+        100
+      ],
+      "goals": [
+        {
+          "name": "Arrange a medley of 3+ songs",
+          "xp": 150
+        },
+        {
+          "name": "Play across multiple genres in one sitting",
+          "xp": 135
+        }
+      ]
+    }
+  ]
+}

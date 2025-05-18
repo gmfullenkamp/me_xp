@@ -1,5 +1,6 @@
 import os
 import sys
+import random
 from glob import glob
 from datetime import datetime
 from PyQt5.QtWidgets import (
@@ -149,11 +150,82 @@ class MeXPApp(QWidget):
         layout.addWidget(self.tabs)
 
         top_bar = QHBoxLayout()
-        top_bar.addStretch()  # Push the button to the right
 
+                # Add motivational welcome message
+        messages = [
+            "Welcome back, young hero. How are the adventures going?",
+            "Life is the ultimate RPG—don’t forget to hydrate and grind!",
+            "Every XP counts. Even brushing your teeth. Probably.",
+            "Ah, a brave soul returns! Time to slay some... habits.",
+            "You don’t just play the hero—you become them. Now go become!",
+            "Respawn complete. Daily quests await, champion.",
+            "May your coffee be strong and your goals plentiful.",
+            "Don't forget to equip your shoes before running. Again.",
+            "Remember: Even side quests give XP. Let’s do this!",
+            "The kingdom missed you. Mostly. Some of it.",
+            "Quest log updated. Objective: absolutely crush it.",
+            "Grinding IRL. Hard mode unlocked.",
+            "What doesn’t kill you gives you XP.",
+            "Check your inventory. You’ve got motivation now.",
+            "Welcome back, adventurer. The laundry dragon still awaits.",
+            "You slept. You leveled up (mentally).",
+            "Today’s mini-boss: your to-do list.",
+            "The hero returns! Did you bring snacks?",
+            "Skill issue? More like skill leveling.",
+            "Another day, another few XP. Let’s make it epic.",
+            "Remember: procrastination is just a stealth mission gone wrong.",
+            "Auto-saving your progress... just kidding. But we do track XP.",
+            "IRL fast travel not available. Go walk, hero.",
+            "You've entered: Productivity Plains. Wild tasks appear!",
+            "Welcome to Day X+1 of your saga. You’re crushing it.",
+            "You are the chosen one. No pressure.",
+            "Time to train your ultimate move: consistency.",
+            "New quest available: Survive Monday. Reward: Glory (and coffee)."
+        ]
+        messages += [
+            "Villagers are talking... they say you're on a streak.",
+            "Welcome back, XP warrior. The grind never sleeps.",
+            "You logged in. Your goals flinched.",
+            "RNG tip: 100% of effort guarantees XP.",
+            "Daily log-in bonus: +1 swagger, +5 confidence.",
+            "Mind sharp? Muscles prepped? Let’s slay the day.",
+            "The enemies today? Laziness, snacks, and doubt. Fight!",
+            "Mana low? Coffee. Always coffee.",
+            "Your journey is legendary. Even the loading screen says so.",
+            "You’ve unlocked a new location: Focus Forest.",
+            "Today's forecast: 70% chance of productivity.",
+            "New ability unlocked: Waking up on time!",
+            "Your mentor is proud. Your past self is impressed.",
+            "This is not a drill. This is a daily quest.",
+            "Even the boss battles take breaks. But not you. You're here.",
+            "Mount Motivation awaits. Pack your lunch.",
+            "You’ve got this. Like, actually. Statistically proven.",
+            "Streak bonus activated. Time to go full anime montage.",
+            "XP multiplier: +1.2 for good vibes.",
+            "Tap into your inner protagonist.",
+            "The treasure was in you all along (and maybe some in the fridge).",
+            "Another chapter begins. Write a good one today.",
+            "That goal you’ve been avoiding? It’s blinking red now.",
+            "Side quests welcome. Just don’t forget the main quest.",
+            "Even your shadow leveled up waiting for you.",
+            "You've been summoned. Accept the call.",
+            "Epic loot awaits: discipline, progress, and self-respect.",
+            "Pro tip: Every step counts. Especially toward snacks AND goals.",
+            "The world didn’t level cap you. Keep going.",
+            "Equip mindset: Legendary",
+            "Stamina regenerates over time. So does motivation.",
+            "You've entered beast mode. Proceed with purpose."
+        ]
+
+        welcome_label = QLabel(random.choice(messages))
+        welcome_label.setStyleSheet("font-size: 16px; font-style: italic; font-weight: bold; margin-right: 20px;")
+    
         reset_button = QPushButton("Reset XP")
         reset_button.setStyleSheet("background-color: red; color: white; font-weight: bold; padding: 10px;")
         reset_button.clicked.connect(self.confirm_reset_xp)
+
+        top_bar.addWidget(welcome_label)
+        top_bar.addStretch()
         top_bar.addWidget(reset_button)
 
         layout.insertLayout(0, top_bar)

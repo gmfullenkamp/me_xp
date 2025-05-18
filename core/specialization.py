@@ -69,8 +69,21 @@ class Specialization:
         awarded_xp = int(xp * multiplier)
 
         self.progress["xp"] += awarded_xp
-        self.progress["level"] = min(100, self.progress["xp"] // 100 + 1)
+        self.progress["level"] = self.calculate_level(self.progress["xp"])
 
         today_str = datetime.today().strftime("%Y-%m-%d")
         self.progress["completed"].setdefault(goal_name, []).append(today_str)
         return awarded_xp
+    
+    @staticmethod
+    def calculate_level(xp):
+        level = 1
+        required = 100
+        total_xp = 0
+
+        while xp >= total_xp + required:
+            total_xp += required
+            level += 1
+            required = int(required * 1.1)  # Increase XP needed per level by 10%
+
+        return level
