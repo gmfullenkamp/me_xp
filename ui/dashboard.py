@@ -1,6 +1,7 @@
 import os
 import sys
 import random
+import pygame
 from glob import glob
 from datetime import datetime
 from PyQt5.QtWidgets import (
@@ -9,7 +10,8 @@ from PyQt5.QtWidgets import (
     QMessageBox, QDialog, QLineEdit
 )
 from PyQt5.QtGui import QPalette, QColor, QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QUrl
+from PyQt5.QtMultimedia import QSoundEffect
 from core.user_profile import UserProfile
 from ui.character_stats import DnDCharacterSheet
 
@@ -17,6 +19,8 @@ TIER_EMOJIS = {
     1: "🌱", 2: "🏃", 3: "🔥", 4: "💪", 5: "🚀",
     6: "⚡", 7: "🏆", 8: "🧠", 9: "👑", 10: "🐉"
 }
+
+pygame.mixer.init()
 
 def get_streak_emoji(streak):
     return "🔥" if streak >= 3 else ""
@@ -27,6 +31,18 @@ def get_multiplier(streak):
 def resource_path(relative_path):
     """Get absolute path to resource, works for dev and for PyInstaller"""
     return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")), relative_path)
+
+def play_random_sound(folder_name):
+    sound_dir = resource_path(os.path.join("assets", folder_name))
+    sound_files = glob(os.path.join(sound_dir, "*.wav"))
+    if not sound_files:
+        return
+
+    sound_path = random.choice(sound_files)
+    try:
+        pygame.mixer.Sound(sound_path).play()
+    except pygame.error as e:
+        print(f"Sound playback error: {e}")
 
 class GoalWidget(QWidget):
     def __init__(self, goal, on_complete, parent_tab):
@@ -117,6 +133,8 @@ class SpecializationTab(QWidget):
         if today in completed_today:
             return  # Already completed today, ignore
         awarded = self.specialization.complete_goal(goal_name)
+        if awarded > 0:
+            play_random_sound("good_sounds")
         self.user_profile.save_specialization(self.specialization)
         self.refresh()  # Refresh UI
     
@@ -292,6 +310,7 @@ class MeXPApp(QWidget):
                 dialog.reject()
 
         ok_button.clicked.connect(handle_confirm)
+        play_random_sound("bad_sounds")
         dialog.exec_()
 
 
