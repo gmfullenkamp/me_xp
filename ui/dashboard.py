@@ -10,10 +10,10 @@ from PyQt5.QtWidgets import (
     QMessageBox, QDialog, QLineEdit
 )
 from PyQt5.QtGui import QPalette, QColor, QIcon
-from PyQt5.QtCore import Qt, QUrl
-from PyQt5.QtMultimedia import QSoundEffect
+from PyQt5.QtCore import Qt
 from core.user_profile import UserProfile
 from ui.character_stats import DnDCharacterSheet
+from ui.overall_stats import StatsDialog
 
 TIER_EMOJIS = {
     1: "🌱", 2: "🏃", 3: "🔥", 4: "💪", 5: "🚀",
@@ -248,12 +248,20 @@ class MeXPApp(QWidget):
 
         top_bar.addWidget(welcome_label)
         top_bar.addStretch()
+        stats_button = QPushButton("View Stats")
+        stats_button.setStyleSheet("background-color: #0077cc; color: white; font-weight: bold; padding: 10px;")
+        stats_button.clicked.connect(self.show_stats_dialog)
+        top_bar.addWidget(stats_button)
         top_bar.addWidget(reset_button)
 
         layout.insertLayout(0, top_bar)
 
         self.setLayout(layout)
         self.setStyleSheet("background-color: #2e2e2e; color: white;")
+
+    def show_stats_dialog(self):
+        stats = StatsDialog(self.user_profile, self)
+        stats.exec_()
 
     def confirm_reset_xp(self):
         self.reset_warnings = [
