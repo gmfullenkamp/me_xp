@@ -15,7 +15,7 @@
             </div>
             <div class="text-end">
                 <a href="{{ url_for('index') }}" class="btn btn-light mb-2">📊 Stats</a><br>
-                <a href="{{ url_for('reset') }}" class="btn btn-danger">Reset XP</a>
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#resetModal">Reset XP</button>
             </div>
         </div>
 
@@ -92,6 +92,24 @@
         </div>
 
     </div>
+    <div class="modal fade" id="resetModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+            <h5 class="modal-title text-danger">🛑 Extreme Danger Zone</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <p id="challengeText">Before resetting, solve this: What is 7 + 5?</p>
+            <input type="text" id="challengeInput" class="form-control" placeholder="Your answer here">
+        </div>
+        <div class="modal-footer">
+            <button id="submitChallenge" class="btn btn-warning">Submit</button>
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+    </div>
+    </div>
 </body>
 </html>
 
@@ -142,5 +160,42 @@ document.querySelectorAll('.complete-goal').forEach(button => {
             goalRow.querySelector('.goal-adjusted-xp').textContent = adjustedXp;
         });
     });
+});
+</script>
+
+<script>
+let currentChallenge = 0;
+const challenges = [
+  { text: "Type 'I AM A FOOL' to continue.", check: input => input === 'I AM A FOOL' },
+  { text: "What is 7 + 5?", check: input => input.trim() === '12' },
+  { text: "Type the word 'RESET' backwards.", check: input => input === 'TESER' },
+  { text: "What color is the sky on a clear day?", check: input => input.toLowerCase().includes('blue') }
+];
+
+function nextChallenge() {
+  if (currentChallenge < challenges.length) {
+    document.getElementById('challengeText').innerText = challenges[currentChallenge].text;
+    document.getElementById('challengeInput').value = '';
+  } else {
+    // Final redirect to reset
+    window.location.href = "/reset";
+  }
+}
+
+document.getElementById('submitChallenge').addEventListener('click', () => {
+  const input = document.getElementById('challengeInput').value.trim();
+  const check = challenges[currentChallenge].check;
+  if (check(input)) {
+    currentChallenge++;
+    nextChallenge();
+  } else {
+    alert("Nope! Try again...");
+  }
+});
+
+// Initialize first challenge
+document.getElementById('resetModal').addEventListener('show.bs.modal', () => {
+  currentChallenge = 0;
+  nextChallenge();
 });
 </script>
