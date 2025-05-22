@@ -46,6 +46,52 @@ def complete_goal(spec_name, goal_name):
         "goal": goal_name
     })
 
+@app.route('/stats')
+def stats():
+    stats_summary = {}
+    overall_completed = {}
+    all_dates = []
+
+    for spec_name in user_profile.data["specializations"]:
+        spec = user_profile.get_specialization(spec_name)
+        completed = spec.progress.get("completed", {})
+
+        # Collect for overall
+        for goal, dates in completed.items():
+            overall_completed.setdefault(goal, []).extend(dates)
+            all_dates.extend(dates)
+
+        total_completed = sum(len(dates) for dates in completed.values())
+        most_done_goal = max(completed.items(), key=lambda x: len(x[1]), default=(None, []))
+        best_streak = max(((g, spec.get_streak(g)["best"]) for g in completed), key=lambda x: x[1], default=(None, 0))
+        first_dates = [datetime.strptime(date, "%Y-%m-%d") for dates in completed.values() for date in dates]
+        first_done = min(first_dates).strftime("%Y-%m-%d") if first_dates else "N/A"
+
+        stats_summary[spec_name] = {
+            "first_completed": first_done,
+            "total_completed": total_completed,
+            "most_done_goal": most_done_goal[0],
+            "most_done_count": len(most_done_goal[1]),
+            "best_streak_goal": best_streak[0],
+            "best_streak_count": best_streak[1],
+        }
+
+    # Compute overall stats
+    overall_first = min((datetime.strptime(d, "%Y-%m-%d") for d in all_dates), default="N/A")
+    overall_most_done = max(overall_completed.items(), key=lambda x: len(x[1]), default=(None, []))
+
+    overall_summary = {
+        "first_completed": overall_first.strftime("%Y-%m-%d") if overall_first != "N/A" else "N/A",
+        "total_completed": sum(len(d) for d in overall_completed.values()),
+        "most_done_goal": overall_most_done[0],
+        "most_done_count": len(overall_most_done[1]) if overall_most_done[1] else 0
+    }
+
+    return jsonify({
+        "overall": overall_summary,
+        "specializations": stats_summary
+    })
+
 @app.route('/reset')
 def reset():
     user_profile.reset_all_data()

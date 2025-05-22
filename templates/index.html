@@ -14,7 +14,7 @@
                 </blockquote>
             </div>
             <div class="text-end">
-                <a href="{{ url_for('index') }}" class="btn btn-light mb-2">📊 Stats</a><br>
+                <button class="btn btn-light mb-2" data-bs-toggle="modal" data-bs-target="#statsModal" id="statsButton">📊 Stats</button><br>
                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#resetModal">Reset XP</button>
             </div>
         </div>
@@ -90,8 +90,8 @@
             </div>
             {% endfor %}
         </div>
-
     </div>
+    <!-- Reset Modal -->
     <div class="modal fade" id="resetModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-dark text-white">
@@ -110,12 +110,27 @@
         </div>
     </div>
     </div>
+    <!-- Stats Modal -->
+    <div class="modal fade" id="statsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+            <h5 class="modal-title">📊 Your Stats</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="statsContent">
+            <p>Loading...</p>
+        </div>
+        </div>
+    </div>
+    </div>
 </body>
 </html>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+// Finished goal logic
 document.querySelectorAll('.complete-goal').forEach(button => {
     button.addEventListener('click', () => {
         const spec = button.dataset.spec;
@@ -164,6 +179,7 @@ document.querySelectorAll('.complete-goal').forEach(button => {
 </script>
 
 <script>
+// Reset logic
 let currentChallenge = 0;
 const challenges = [
   { text: "Type 'I AM A FOOL' to continue.", check: input => input === 'I AM A FOOL' },
@@ -197,5 +213,43 @@ document.getElementById('submitChallenge').addEventListener('click', () => {
 document.getElementById('resetModal').addEventListener('show.bs.modal', () => {
   currentChallenge = 0;
   nextChallenge();
+});
+</script>
+
+<script>
+// Stats logic
+document.getElementById("statsButton").addEventListener("click", () => {
+    fetch('/stats')
+        .then(res => res.json())
+        .then(data => {
+            const statsDiv = document.getElementById("statsContent");
+            const overall = data.overall;
+            const specs = data.specializations;
+
+            statsDiv.innerHTML = `
+                <div class="mb-4">
+                    <h4 class="text-info">🌍 Overall Summary</h4>
+                    <ul>
+                        <li>🕒 First Task Completed: <strong>${overall.first_completed}</strong></li>
+                        <li>✅ Total Tasks Completed: <strong>${overall.total_completed}</strong></li>
+                        <li>🏆 Most Completed Goal: <strong>${overall.most_done_goal}</strong> (${overall.most_done_count} times)</li>
+                    </ul>
+                </div>
+            `;
+
+            for (const [spec, info] of Object.entries(specs)) {
+                statsDiv.innerHTML += `
+                    <div class="mb-4">
+                        <h5 class="text-warning">${spec}</h5>
+                        <ul>
+                            <li>🕒 First Task Completed: <strong>${info.first_completed}</strong></li>
+                            <li>✅ Total Tasks Completed: <strong>${info.total_completed}</strong></li>
+                            <li>🏆 Most Completed Goal: <strong>${info.most_done_goal}</strong> (${info.most_done_count} times)</li>
+                            <li>🔥 Best Goal Streak: <strong>${info.best_streak_goal}</strong> (${info.best_streak_count} days)</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        });
 });
 </script>
