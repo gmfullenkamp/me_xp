@@ -15,6 +15,14 @@
             </div>
             <div class="text-end">
                 <button class="btn btn-light mb-2" data-bs-toggle="modal" data-bs-target="#statsModal" id="statsButton">📊 Stats</button><br>
+            </div>
+            <div class="text-end">
+                <a href="https://github.com/gmfullenkamp/me_xp#" target="_blank" class="btn btn-outline-light mb-2">🌐 GitHub</a><br>
+            </div>
+            <div class="text-end">
+                <a href="https://github.com/your-username/me-xp/issues/new?template=feature_request.md" target="_blank" class="btn btn-outline-warning">💡 Suggest a Feature</a>
+            </div>
+            <div class="text-end">
                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#resetModal">Reset XP</button>
             </div>
         </div>
@@ -35,9 +43,10 @@
                 <div class="progress mb-3" style="height: 24px;">
                     <div class="progress-bar" id="xp-bar-{{ spec_index }}"
                         role="progressbar"
-                        style="width: {{ (spec.progress.xp % 100) }}%;"
-                        aria-valuenow="{{ spec.progress.xp % 100 }}" aria-valuemin="0" aria-valuemax="100">
-                        <span id="xp-label-{{ spec_index }}">{{ spec.progress.xp % 100 }} / 100 XP</span>
+                        style="width: {{ (spec.progress.xp_progress / (spec.progress.xp_end - spec.progress.xp_start) * 100) | round(2) }}%;"
+                        aria-valuenow="{{ spec.progress.xp_progress }}"
+                        aria-valuemin="0" aria-valuemax="{{ spec.progress.xp_end - spec.progress.xp_start }}">
+                        <span id="xp-label-{{ spec_index }}">{{ spec.progress.xp_progress }} / {{ spec.progress.xp_end - spec.progress.xp_start }} XP</span>
                     </div>
                 </div>
                 <div id="collapse-{{ loop.index }}" class="accordion-collapse collapse"

@@ -14,11 +14,20 @@ user_profile = UserProfile()
 
 @app.route('/')
 def index():
-    # Load all specializations from the JSON files
     spec_files = glob.glob(os.path.join("specializations", "*_goals.json"))
     spec_names = [os.path.basename(f).replace("_goals.json", "") for f in spec_files]
     specs = [user_profile.get_specialization(name) for name in spec_names]
-    
+
+    # Compute XP info for each specialization
+    for spec in specs:
+        level = spec.progress["level"]
+        xp = spec.progress["xp"]
+        xp_required_to_level = lambda l: sum(int(100 * (1.1 ** (i - 1))) for i in range(1, l))
+
+        spec.progress["xp_start"] = xp_required_to_level(level)
+        spec.progress["xp_end"] = xp_required_to_level(level + 1)
+        spec.progress["xp_progress"] = xp - spec.progress["xp_start"]
+
     today = datetime.today().strftime('%Y-%m-%d')
     return render_template('index.html', specs=specs, quote=SESSION_QUOTE, current_date=today)
 
@@ -29,10 +38,19 @@ def complete_goal(spec_name, goal_name):
     user_profile.save_specialization(spec)
 
     streak = spec.get_streak(goal_name)
-    xp = spec.progress["xp"]
     level = spec.progress["level"]
-    current = xp % 100
-    target = level * 100
+    xp = spec.progress["xp"]
+
+    # Calculate XP needed to reach current level
+    def xp_required_to_level(lvl):
+        return sum(int(100 * (1.1 ** (i - 1))) for i in range(1, lvl))
+
+    xp_for_current_level = xp_required_to_level(level)
+    xp_for_next_level = xp_required_to_level(level + 1)
+
+    current = xp - xp_for_current_level
+    target = xp_for_next_level - xp_for_current_level
+
     multiplier = round(1.0 + 0.1 * min(streak["current"], 10), 1)
 
     return jsonify({
