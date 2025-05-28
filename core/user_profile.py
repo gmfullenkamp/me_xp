@@ -8,16 +8,16 @@ from core.specialization import Specialization
 def resource_path(relative_path):
     return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")), relative_path)
 
-def get_appdata_path():
-    """Return a writable folder path for user progress (e.g., AppData/MeXP)"""
+def get_appdata_path(username):
     base = os.getenv('APPDATA') or os.path.expanduser("~")
-    path = os.path.join(base, "MeXP")
+    path = os.path.join(base, "MeXP", "users", username)
     os.makedirs(path, exist_ok=True)
     return os.path.join(path, "user_progress.json")
 
 class UserProfile:
-    def __init__(self):
-        self.path = get_appdata_path()
+    def __init__(self, username):
+        self.username = username
+        self.path = get_appdata_path(username)
         self.data = {}
         self._load()
 
@@ -26,6 +26,8 @@ class UserProfile:
             shutil.copyfile(resource_path("data/init_progress.json"), self.path)
         with open(self.path, 'r') as f:
             self.data = json.load(f)
+        if "specializations" not in self.data:
+            self.data["specializations"] = {}
 
     def get_specialization(self, name):
         goal_path = resource_path(f"specializations/{name.lower()}_goals.json")

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Me XP Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white">
+    <div class="container mt-4 p-4 rounded border border-light" style="background-color: #1e1e1e;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="text-end">
+                <p class="text-white">Logged in as: <strong>{{ current_user.username }}</strong></p>
+            </div>
+            <div class="text-end">
+                <a href="/logout" class="btn btn-outline-light">Logout</a>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="mb-1">🎮 Me XP Dashboard</h1>
+                <blockquote class="blockquote text-warning mb-0">
+                    <p class="mb-0"><em>{{ quote }}</em></p>
+                </blockquote>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-light mb-2" data-bs-toggle="modal" data-bs-target="#statsModal" id="statsButton">📊 Stats</button><br>
+            </div>
+            <div class="text-end">
+                <a href="https://github.com/gmfullenkamp/me_xp#" target="_blank" class="btn btn-outline-light mb-2">🌐 GitHub</a><br>
+            </div>
+            <div class="text-end">
+                <a href="https://github.com/gmfullenkamp/me_xp/issues/new" target="_blank" class="btn btn-outline-warning">💡 Suggest a Feature</a>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#resetModal">Reset XP</button>
+            </div>
+        </div>
+
+        <div class="accordion" id="specializationAccordion">
+            {% for spec in specs %}
+            {% set spec_index = loop.index %}
+            <div class="accordion-item bg-secondary text-white">
+                <h2 class="accordion-header" id="heading-{{ loop.index }}">
+                    <button class="accordion-button collapsed bg-dark text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.index }}"
+                            aria-expanded="false" aria-controls="collapse-{{ loop.index }}">
+                        <span id="level-label-{{ loop.index }}">
+                            {{ spec.name }} — ⭐ Level {{ spec.progress.level }}
+                        </span>
+                    </button>
+                </h2>
+                <div class="progress mb-3" style="height: 24px;">
+                    <div class="progress-bar" id="xp-bar-{{ spec_index }}"
+                        role="progressbar"
+                        style="width: {{ (spec.progress.xp_progress / (spec.progress.xp_end - spec.progress.xp_start) * 100) | round(2) }}%;"
+                        aria-valuenow="{{ spec.progress.xp_progress }}"
+                        aria-valuemin="0" aria-valuemax="{{ spec.progress.xp_end - spec.progress.xp_start }}">
+                        <span id="xp-label-{{ spec_index }}">{{ spec.progress.xp_progress }} / {{ spec.progress.xp_end - spec.progress.xp_start }} XP</span>
+                    </div>
+                </div>
+                <div id="collapse-{{ loop.index }}" class="accordion-collapse collapse"
+                    aria-labelledby="heading-{{ loop.index }}" data-bs-parent="#specializationAccordion">
+                    <div class="accordion-body">
+
+                        {% for tier in spec.get_goals() %}
+                        {% if spec.progress.level >= tier.level_range[0] %}
+                        <div class="card bg-secondary text-white mb-2">
+                            <div class="card-header">
+                                🧱 Tier {{ tier.tier }} (Lv {{ tier.level_range[0] }}–{{ tier.level_range[1] }})
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for goal in tier.goals %}
+                                <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center"
+                                    data-goal="{{ goal.name }}">
+                                    <div class="goal-info" id="goal-info-{{ spec_index }}-{{ loop.index0 }}">
+                                        <strong>{{ goal.name }}</strong><br>
+                                        {% set multiplier = 1.0 + 0.1 * (goal.streak.current if goal.streak.current < 10 else 10) %}
+                                        {% set adjusted_xp = (goal.xp * multiplier)|round(0, 'floor') %}
+                                        <small>
+                                            ✨ {{ goal.xp|int }} XP →
+                                            💥 <span class="goal-adjusted-xp">{{ adjusted_xp|int }}</span> XP |
+                                            🔥 Streak: <span class="goal-streak">{{ goal.streak.current }}</span>
+                                            (Best: <span class="goal-streak-best">{{ goal.streak.best }}</span>) |
+                                            💥 XP Multiplier: x<span class="goal-multiplier">{{ multiplier|round(1) }}</span>
+                                        </small>
+                                    </div>
+                                    {% if current_date in goal.completed %}
+                                        <span class="badge bg-success">✔ Done</span>
+                                    {% else %}
+                                        <button class="btn btn-light btn-sm complete-goal"
+                                                data-spec="{{ spec.name }}"
+                                                data-goal="{{ goal.name }}"
+                                                data-base-xp="{{ goal.xp }}"
+                                                data-xp-bar-id="xp-bar-{{ spec_index }}"
+                                                data-level-label-id="level-label-{{ spec_index }}"
+                                                data-xp-label-id="xp-label-{{ spec_index }}">
+                                            Complete
+                                        </button>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Reset Modal -->
+    <div class="modal fade" id="resetModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+            <h5 class="modal-title text-danger">🛑 Extreme Danger Zone</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <p id="challengeText">Before resetting, solve this: What is 7 + 5?</p>
+            <input type="text" id="challengeInput" class="form-control" placeholder="Your answer here">
+        </div>
+        <div class="modal-footer">
+            <button id="submitChallenge" class="btn btn-warning">Submit</button>
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <!-- Stats Modal -->
+    <div class="modal fade" id="statsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+            <h5 class="modal-title">📊 Your Stats</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="statsContent">
+            <p>Loading...</p>
+        </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Finished goal logic
+document.querySelectorAll('.complete-goal').forEach(button => {
+    button.addEventListener('click', () => {
+        const spec = button.dataset.spec;
+        const goal = button.dataset.goal;
+        const xpBar = document.getElementById(button.dataset.xpBarId);
+        const levelLabel = document.getElementById(button.dataset.levelLabelId);
+        const xpLabel = document.getElementById(button.dataset.xpLabelId);
+
+        fetch(`/complete_goal/${encodeURIComponent(spec)}/${encodeURIComponent(goal)}`, {
+            method: 'POST'
+        }).then(res => res.json()).then(data => {
+            // Update button
+            button.classList.remove('btn-light');
+            button.classList.add('btn-success');
+            button.textContent = `✔ +${data.awarded} XP`;
+            button.disabled = true;
+
+            // Update level + XP bar
+            if (xpBar && xpLabel && levelLabel) {
+                xpBar.style.width = data.current + '%';
+                xpBar.setAttribute('aria-valuenow', data.current);
+                xpLabel.textContent = `${data.current} / 100 XP`;
+                levelLabel.textContent = `${spec} — ⭐ Level ${data.level}`;
+            }
+
+            // Update goal info (streak, multiplier)
+            const goalRow = button.closest('li');
+            if (goalRow) {
+                goalRow.querySelector('.goal-streak').textContent = data.streak.current;
+                goalRow.querySelector('.goal-streak-best').textContent = data.streak.best;
+                goalRow.querySelector('.goal-multiplier').textContent = data.multiplier.toFixed(1);
+
+                // Optionally add ✔ badge next to goal
+                const badge = document.createElement('span');
+                badge.className = 'badge bg-success ms-2';
+                badge.textContent = '✔ Done';
+                button.replaceWith(badge);
+            }
+
+            // Multiply next viewed xp gain
+            const adjustedXp = Math.floor(button.dataset.baseXp * data.multiplier);
+            goalRow.querySelector('.goal-adjusted-xp').textContent = adjustedXp;
+        });
+    });
+});
+</script>
+
+<script>
+// Reset logic
+let currentChallenge = 0;
+const challenges = [
+  { text: "Type 'I AM A FOOL' to continue.", check: input => input === 'I AM A FOOL' },
+  { text: "What is 7 + 5?", check: input => input.trim() === '12' },
+  { text: "Type the word 'RESET' backwards.", check: input => input === 'TESER' },
+  { text: "What color is the sky on a clear day?", check: input => input.toLowerCase().includes('blue') }
+];
+
+function nextChallenge() {
+  if (currentChallenge < challenges.length) {
+    document.getElementById('challengeText').innerText = challenges[currentChallenge].text;
+    document.getElementById('challengeInput').value = '';
+  } else {
+    // Final redirect to reset
+    window.location.href = "/reset";
+  }
+}
+
+document.getElementById('submitChallenge').addEventListener('click', () => {
+  const input = document.getElementById('challengeInput').value.trim();
+  const check = challenges[currentChallenge].check;
+  if (check(input)) {
+    currentChallenge++;
+    nextChallenge();
+  } else {
+    alert("Nope! Try again...");
+  }
+});
+
+// Initialize first challenge
+document.getElementById('resetModal').addEventListener('show.bs.modal', () => {
+  currentChallenge = 0;
+  nextChallenge();
+});
+</script>
+
+<script>
+// Stats logic
+document.getElementById("statsButton").addEventListener("click", () => {
+    fetch('/stats')
+        .then(res => res.json())
+        .then(data => {
+            const statsDiv = document.getElementById("statsContent");
+            const overall = data.overall;
+            const specs = data.specializations;
+
+            statsDiv.innerHTML = `
+                <div class="mb-4">
+                    <h4 class="text-info">🌍 Overall Summary</h4>
+                    <ul>
+                        <li>🕒 First Task Completed: <strong>${overall.first_completed}</strong></li>
+                        <li>✅ Total Tasks Completed: <strong>${overall.total_completed}</strong></li>
+                        <li>🏆 Most Completed Goal: <strong>${overall.most_done_goal}</strong> (${overall.most_done_count} times)</li>
+                    </ul>
+                </div>
+            `;
+
+            for (const [spec, info] of Object.entries(specs)) {
+                statsDiv.innerHTML += `
+                    <div class="mb-4">
+                        <h5 class="text-warning">${spec}</h5>
+                        <ul>
+                            <li>🕒 First Task Completed: <strong>${info.first_completed}</strong></li>
+                            <li>✅ Total Tasks Completed: <strong>${info.total_completed}</strong></li>
+                            <li>🏆 Most Completed Goal: <strong>${info.most_done_goal}</strong> (${info.most_done_count} times)</li>
+                            <li>🔥 Best Goal Streak: <strong>${info.best_streak_goal}</strong> (${info.best_streak_count} days)</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        });
+});
+</script>

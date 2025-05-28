@@ -75,6 +75,9 @@ class Specialization:
         self.progress["completed"].setdefault(goal_name, []).append(today_str)
         return awarded_xp
     
+    def get_xp_to_next_level(self, level):
+        return int(100 * (1.1 ** (level - 1)))
+    
     @staticmethod
     def calculate_level(xp):
         level = 1
