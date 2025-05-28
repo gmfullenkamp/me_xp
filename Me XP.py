@@ -6,14 +6,66 @@ import random
 from datetime import datetime
 from constants import QUOTES
 
+from flask import Flask, render_template, redirect, request, url_for, flash
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from core.auth import get_user, register_user, users
+
 # Global quote cache
 SESSION_QUOTE = random.choice(QUOTES)
 
+# Init Flask and Login Manager
 app = Flask(__name__)
-user_profile = UserProfile()
+app.secret_key = 'super-secret-key'
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+def get_user_profile():
+    return UserProfile(current_user.username)
+
+@login_manager.user_loader
+def load_user(user_id):
+    for user in users.values():
+        if str(user.id) == user_id:
+            return user
+    return None
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = register_user(username, password)
+        if user:
+            login_user(user)
+            return redirect(url_for('index'))
+        else:
+            flash("Username already exists")
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = get_user(username)
+        if user and user.check_password(password):
+            login_user(user)
+            return redirect(url_for('index'))
+        else:
+            flash("Invalid credentials")
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route('/')
+@login_required
 def index():
+    user_profile = get_user_profile()
     spec_files = glob.glob(os.path.join("specializations", "*_goals.json"))
     spec_names = [os.path.basename(f).replace("_goals.json", "") for f in spec_files]
     specs = [user_profile.get_specialization(name) for name in spec_names]
@@ -32,7 +84,9 @@ def index():
     return render_template('index.html', specs=specs, quote=SESSION_QUOTE, current_date=today)
 
 @app.route('/complete_goal/<spec_name>/<goal_name>', methods=['POST'])
+@login_required
 def complete_goal(spec_name, goal_name):
+    user_profile = get_user_profile()
     spec = user_profile.get_specialization(spec_name)
     awarded = spec.complete_goal(goal_name)
     user_profile.save_specialization(spec)
@@ -65,7 +119,9 @@ def complete_goal(spec_name, goal_name):
     })
 
 @app.route('/stats')
+@login_required
 def stats():
+    user_profile = get_user_profile()
     stats_summary = {}
     overall_completed = {}
     all_dates = []
@@ -111,7 +167,9 @@ def stats():
     })
 
 @app.route('/reset')
+@login_required
 def reset():
+    user_profile = get_user_profile()
     user_profile.reset_all_data()
     return redirect(url_for('index'))
 

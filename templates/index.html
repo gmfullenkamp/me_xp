@@ -7,6 +7,14 @@
 <body class="bg-dark text-white">
     <div class="container mt-4 p-4 rounded border border-light" style="background-color: #1e1e1e;">
         <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="text-end">
+                <p class="text-white">Logged in as: <strong>{{ current_user.username }}</strong></p>
+            </div>
+            <div class="text-end">
+                <a href="/logout" class="btn btn-outline-light">Logout</a>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h1 class="mb-1">🎮 Me XP Dashboard</h1>
                 <blockquote class="blockquote text-warning mb-0">
