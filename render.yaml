@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: me-xp
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: gunicorn "Me XP:app"
+    envVars:
+      - key: FLASK_ENV
+        value: production
