@@ -1,15 +1,18 @@
-from flask import Flask, render_template, redirect, url_for, jsonify
-import os
 import glob
 import json
+import os
 import random
 from datetime import datetime
+
+from flask import (Flask, flash, jsonify, redirect, render_template, request,
+                   url_for)
+from flask_login import (LoginManager, current_user, login_required,
+                         login_user, logout_user)
+
 from constants import QUOTES
-from flask import Flask, render_template, redirect, request, url_for, flash
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from core.auth import get_user, register_user
+from core.models import GoalCompletion, Specialization, User, db
 from core.user_profile import UserProfile, compute_streak
-from core.models import db, GoalCompletion, User
 from core.xp_engine import XPEngine
 
 # Global quote cache
@@ -17,59 +20,63 @@ SESSION_QUOTE = random.choice(QUOTES)
 
 # Init Flask and Login Manager
 app = Flask(__name__)
-app.secret_key = 'super-secret-key'
+app.secret_key = "super-secret-key"
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
+login_manager.login_view = "login"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    os.environ.get("DATABASE_URL") or "sqlite:///dev.db"
+)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 
 with app.app_context():
     db.create_all()
 
-def get_user_profile():
-    return UserProfile(current_user.username)
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route('/register', methods=['GET', 'POST'])
+
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
         user = register_user(username, password)
         if user:
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for("index"))
         else:
             flash("Username already exists")
-    return render_template('register.html')
+    return render_template("register.html")
 
-@app.route('/login', methods=['GET', 'POST'])
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
         user = get_user(username)
         if user and user.check_password(password):
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for("index"))
         else:
             flash("Invalid credentials")
-    return render_template('login.html')
+    return render_template("login.html")
 
-@app.route('/logout')
+
+@app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for("login"))
 
-@app.route('/')
+
+@app.route("/")
 @login_required
 def index():
     user_profile = UserProfile(current_user)
@@ -83,7 +90,9 @@ def index():
         level = spec.level
 
         # XP progress calculations
-        xp_required_to_level = lambda l: sum(int(100 * (1.1 ** (i - 1))) for i in range(1, l))
+        xp_required_to_level = lambda l: sum(
+            int(100 * (1.1 ** (i - 1))) for i in range(1, l)
+        )
         xp_start = xp_required_to_level(level)
         xp_end = xp_required_to_level(level + 1)
         xp_progress = xp - xp_start
@@ -96,7 +105,9 @@ def index():
         completions = GoalCompletion.query.filter_by(specialization_id=spec.id).all()
         completed_lookup = {}
         for c in completions:
-            completed_lookup.setdefault(c.goal_name, []).append(c.completed_date.strftime("%Y-%m-%d"))
+            completed_lookup.setdefault(c.goal_name, []).append(
+                c.completed_date.strftime("%Y-%m-%d")
+            )
 
         # Process goals into tiers
         goals_by_tier = []
@@ -108,35 +119,44 @@ def index():
                 multiplier = 1.0 + 0.1 * min(streak["current"], 10)
                 adjusted_xp = int(goal["xp"] * multiplier)
 
-                tier_goals.append({
-                    "name": goal["name"],
-                    "xp": goal["xp"],
-                    "adjusted_xp": adjusted_xp,
-                    "streak": streak,
-                    "completed": done_dates
-                })
+                tier_goals.append(
+                    {
+                        "name": goal["name"],
+                        "xp": goal["xp"],
+                        "adjusted_xp": adjusted_xp,
+                        "streak": streak,
+                        "completed": done_dates,
+                    }
+                )
 
-            goals_by_tier.append({
-                "tier": tier["tier"],
-                "level_range": tier["level_range"],
-                "goals": tier_goals
-            })
+            goals_by_tier.append(
+                {
+                    "tier": tier["tier"],
+                    "level_range": tier["level_range"],
+                    "goals": tier_goals,
+                }
+            )
 
         # Attach all data to spec-like object
-        specs.append({
-            "name": name,
-            "level": level,
-            "xp": xp,
-            "xp_start": xp_start,
-            "xp_end": xp_end,
-            "xp_progress": xp_progress,
-            "goals_by_tier": goals_by_tier
-        })
+        specs.append(
+            {
+                "name": name,
+                "level": level,
+                "xp": xp,
+                "xp_start": xp_start,
+                "xp_end": xp_end,
+                "xp_progress": xp_progress,
+                "goals_by_tier": goals_by_tier,
+            }
+        )
 
-    today = datetime.utcnow().strftime('%Y-%m-%d')
-    return render_template('index.html', specs=specs, quote=SESSION_QUOTE, current_date=today)
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    return render_template(
+        "index.html", specs=specs, quote=SESSION_QUOTE, current_date=today
+    )
 
-@app.route('/complete_goal/<spec_name>/<path:goal_name>', methods=['POST'])
+
+@app.route("/complete_goal/<spec_name>/<path:goal_name>", methods=["POST"])
 @login_required
 def complete_goal(spec_name, goal_name):
     engine = XPEngine(current_user)
@@ -147,69 +167,105 @@ def complete_goal(spec_name, goal_name):
 
     return jsonify(result)
 
-@app.route('/complete_goal/<spec>/<goal>', methods=['POST'])
+
+@app.route("/complete_goal/<spec>/<goal>", methods=["POST"])
 @login_required
 def complete_goal_handler(spec, goal):  # ✅ Use a different name
     engine = XPEngine(current_user)
     result = engine.complete_goal(spec, goal)
     if result is None:
-        return jsonify({'error': 'Invalid goal'}), 400
+        return jsonify({"error": "Invalid goal"}), 400
     return jsonify(result)
 
-@app.route('/stats')
+
+@app.route("/stats")
 @login_required
 def stats():
-    user_profile = UserProfile(current_user)
-    stats_summary = {}
-    overall_completed = {}
-    all_dates = []
+    specializations = Specialization.query.filter_by(user_id=current_user.id).all()
 
-    for spec_name in user_profile.data["specializations"]:
-        spec = user_profile.get_specialization(spec_name)
-        completed = spec.progress.get("completed", {})
-
-        # Collect for overall
-        for goal, dates in completed.items():
-            overall_completed.setdefault(goal, []).extend(dates)
-            all_dates.extend(dates)
-
-        total_completed = sum(len(dates) for dates in completed.values())
-        most_done_goal = max(completed.items(), key=lambda x: len(x[1]), default=(None, []))
-        best_streak = max(((g, spec.get_streak(g)["best"]) for g in completed), key=lambda x: x[1], default=(None, 0))
-        first_dates = [datetime.strptime(date, "%Y-%m-%d") for dates in completed.values() for date in dates]
-        first_done = min(first_dates).strftime("%Y-%m-%d") if first_dates else "N/A"
-
-        stats_summary[spec_name] = {
-            "first_completed": first_done,
-            "total_completed": total_completed,
-            "most_done_goal": most_done_goal[0],
-            "most_done_count": len(most_done_goal[1]),
-            "best_streak_goal": best_streak[0],
-            "best_streak_count": best_streak[1],
-        }
-
-    # Compute overall stats
-    overall_first = min((datetime.strptime(d, "%Y-%m-%d") for d in all_dates), default="N/A")
-    overall_most_done = max(overall_completed.items(), key=lambda x: len(x[1]), default=(None, []))
-
-    overall_summary = {
-        "first_completed": overall_first.strftime("%Y-%m-%d") if overall_first != "N/A" else "N/A",
-        "total_completed": sum(len(d) for d in overall_completed.values()),
-        "most_done_goal": overall_most_done[0],
-        "most_done_count": len(overall_most_done[1]) if overall_most_done[1] else 0
+    stats_data = {
+        "overall": {
+            "first_completed": None,
+            "total_completed": 0,
+            "most_done_goal": None,
+            "most_done_count": 0,
+        },
+        "specializations": {},
     }
 
-    return jsonify({
-        "overall": overall_summary,
-        "specializations": stats_summary
-    })
+    goal_counts = {}
 
-@app.route('/reset')
+    for spec in specializations:
+        completions = GoalCompletion.query.filter_by(specialization_id=spec.id).all()
+        dates = [c.completed_date for c in completions]
+        goal_names = [c.goal_name for c in completions]
+
+        if dates:
+            first = min(dates).strftime("%Y-%m-%d")
+        else:
+            first = "N/A"
+
+        spec_goal_counts = {}
+        for name in goal_names:
+            spec_goal_counts[name] = spec_goal_counts.get(name, 0) + 1
+            goal_counts[name] = goal_counts.get(name, 0) + 1
+
+        if spec_goal_counts:
+            most_done = max(spec_goal_counts, key=spec_goal_counts.get)
+            most_count = spec_goal_counts[most_done]
+        else:
+            most_done, most_count = "N/A", 0
+
+        best_streak = 0
+        best_streak_goal = "N/A"
+        for name in set(goal_names):
+            dates = [
+                c.completed_date.strftime("%Y-%m-%d")
+                for c in completions
+                if c.goal_name == name
+            ]
+            streak = compute_streak(dates)
+            if streak["best"] > best_streak:
+                best_streak = streak["best"]
+                best_streak_goal = name
+
+        stats_data["specializations"][spec.name] = {
+            "first_completed": first,
+            "total_completed": len(completions),
+            "most_done_goal": most_done,
+            "most_done_count": most_count,
+            "best_streak_goal": best_streak_goal,
+            "best_streak_count": best_streak,
+        }
+
+    if goal_counts:
+        overall_most_done = max(goal_counts, key=goal_counts.get)
+        overall_most_count = goal_counts[overall_most_done]
+    else:
+        overall_most_done, overall_most_count = "N/A", 0
+
+    first_dates = [
+        c.completed_date
+        for spec in specializations
+        for c in GoalCompletion.query.filter_by(specialization_id=spec.id)
+    ]
+    stats_data["overall"]["first_completed"] = (
+        min(first_dates).strftime("%Y-%m-%d") if first_dates else "N/A"
+    )
+    stats_data["overall"]["total_completed"] = sum(goal_counts.values())
+    stats_data["overall"]["most_done_goal"] = overall_most_done
+    stats_data["overall"]["most_done_count"] = overall_most_count
+
+    return jsonify(stats_data)
+
+
+@app.route("/reset")
 @login_required
 def reset():
     user_profile = UserProfile(current_user)
     user_profile.reset_all_data()
-    return redirect(url_for('index'))
+    return redirect(url_for("index"))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True)

@@ -1,10 +1,13 @@
 import os
+
+from core.goal_manager import GoalManager
 from core.models import db
 from core.user_profile import UserProfile, compute_streak
-from core.goal_manager import GoalManager
+
 
 def xp_required_to_level(level):
     return sum(int(100 * (1.1 ** (i - 1))) for i in range(1, level))
+
 
 def calculate_level(xp):
     level = 1
@@ -15,6 +18,7 @@ def calculate_level(xp):
         level += 1
         required = int(required * 1.1)
     return level
+
 
 def get_streak(spec, goal_name):
     completions = [
@@ -30,10 +34,12 @@ class XPEngine:
         self.user_profile = UserProfile(user)
 
     def complete_goal(self, specialization_name, goal_name):
-        json_path = os.path.join("specializations", f"{specialization_name.lower()}_goals.json")
+        json_path = os.path.join(
+            "specializations", f"{specialization_name.lower()}_goals.json"
+        )
         self.goal_manager = GoalManager(json_path)
         spec = self.user_profile.get_specialization(specialization_name)
-        base_xp = self.goal_manager.get_xp_for_goal(specialization_name, goal_name)
+        base_xp = self.goal_manager.get_xp_for_goal(goal_name)
         if base_xp is None:
             return None
 
@@ -53,8 +59,9 @@ class XPEngine:
             "xp": spec.xp,
             "level": spec.level,
             "current": spec.xp - xp_required_to_level(spec.level),
-            "target": xp_required_to_level(spec.level + 1) - xp_required_to_level(spec.level),
+            "target": xp_required_to_level(spec.level + 1)
+            - xp_required_to_level(spec.level),
             "streak": streak_info,
             "multiplier": round(multiplier, 1),
-            "goal": goal_name
+            "goal": goal_name,
         }

@@ -57,5 +57,5 @@ QUOTES = [
     "The world didn’t level cap you. Keep going.",
     "Equip mindset: Legendary",
     "Stamina regenerates over time. So does motivation.",
-    "You've entered beast mode. Proceed with purpose."
+    "You've entered beast mode. Proceed with purpose.",
 ]

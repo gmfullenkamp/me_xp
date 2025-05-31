@@ -1,5 +1,7 @@
-from core.models import Specialization, GoalCompletion, db
 from datetime import datetime
+
+from core.models import GoalCompletion, Specialization, db
+
 
 class UserProfile:
     def __init__(self, user):
@@ -16,9 +18,15 @@ class UserProfile:
     def save_goal_completion(self, spec_name, goal_name):
         spec = self.get_specialization(spec_name)
         today = datetime.utcnow().date()
-        exists = GoalCompletion.query.filter_by(specialization_id=spec.id, goal_name=goal_name, completed_date=today).first()
+        exists = GoalCompletion.query.filter_by(
+            specialization_id=spec.id, goal_name=goal_name, completed_date=today
+        ).first()
         if not exists:
-            db.session.add(GoalCompletion(goal_name=goal_name, specialization_id=spec.id, completed_date=today))
+            db.session.add(
+                GoalCompletion(
+                    goal_name=goal_name, specialization_id=spec.id, completed_date=today
+                )
+            )
             db.session.commit()
 
     def reset_all_data(self):
@@ -34,7 +42,9 @@ def compute_streak(completion_dates):
     if not completion_dates:
         return {"current": 0, "best": 0}
 
-    dates = sorted(set(datetime.strptime(d, "%Y-%m-%d").date() for d in completion_dates))
+    dates = sorted(
+        set(datetime.strptime(d, "%Y-%m-%d").date() for d in completion_dates)
+    )
     today = datetime.utcnow().date()
 
     # Current streak

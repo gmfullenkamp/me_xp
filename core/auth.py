@@ -1,5 +1,7 @@
-from core.models import db, User
 from werkzeug.security import generate_password_hash
+
+from core.models import User, db
+
 
 def register_user(username, password):
     if User.query.filter_by(username=username).first():
@@ -8,6 +10,7 @@ def register_user(username, password):
     db.session.add(new_user)
     db.session.commit()
     return new_user
+
 
 def get_user(username):
     return User.query.filter_by(username=username).first()

@@ -2,57 +2,66 @@
 
 "Life is the ultimate RPG. You don’t just play the hero—you become them." -Grant Fullenkamp
 
-**Me XP** is a gamified life progression tracker that lets you earn experience and level up in real-world specializations—like *Running*, *Coding*, *Strength Training*, *Cooking*, and more. Inspired by RPGs and idle games like *Melvor Idle*, this system turns personal growth into a game worth mastering.
-
-With Me XP, every step, rep, habit, and goal brings you closer to your next level.
+**Me XP** is a gamified life progression tracker where real-world actions grant experience (XP) in personal specializations like *Running*, *Coding*, *Strength Training*, and more. Inspired by RPG mechanics and games like *Melvor Idle*, it turns habits into progress and goals into achievements.
 
 ---
 
 ## 🚀 What Is Me XP?
 
-In *Me XP*, every action counts. Whether you jog a mile, learn a new algorithm, or cook dinner for your friends, you earn XP toward that specialization. Progress through levels, unlock new goals, and challenge yourself with tasks of increasing complexity.
+In *Me XP*, every completed task earns XP within a **specialization**. As you gain XP, you level up and unlock more advanced challenges. 
 
-Each specialization (e.g., **Running**) has:
-- 🧩 **Tiered Goals** with different intensity levels
-- 🎯 **XP rewards** scaled to difficulty
-- 🧱 **Levels 1–100**, divided into 10 tiers
-- 🔄 **Streaks, bonuses, and synergy** between skills (future)
+Each specialization includes:
+- 🧱 **Tiered goals**, unlocked as you level up (10 tiers for levels 1–100)
+- ✨ **XP rewards** scaled to task difficulty
+- 🔥 **Streak multipliers** that reward consistency
+- 📈 **Leveling curve** with exponential XP requirements
+- 📊 **Dashboard** to view progress and stats
 
 ---
 
-## 🏃 Example Specialization: Running
+## 🏃 Specialization Example: Running
 
-| **Tier**       | **Level Range** | **Goal Examples**                                      | **XP Range** |
-|----------------|------------------|--------------------------------------------------------|--------------|
-| Tier 1: Beginner       | 0–9             | Walk 1 mile, Jog 5 min, 5,000 steps/day                | 10–25 XP     |
-| Tier 2: Novice         | 10–19            | Run 1 mile nonstop, Jog 20 min, Sprint intervals       | 30–50 XP     |
-| Tier 3: Intermediate   | 20–29            | Run 3 miles, Timed mile, Interval sprints              | 60–90 XP     |
-| Tier 4: Skilled        | 30–39            | 10k run, Hill sessions, Beat your 5k PR                | 100–140 XP   |
-| Tier 5: Advanced       | 40–49            | Half-marathon, 30km/week total, Fasted runs            | 150–200 XP   |
-| Tier 6: Expert         | 50–59            | Sub-7 mile, Heart rate control run, 100mi/month goal   | 220–300 XP   |
-| Tier 7: Elite          | 60–69            | 25km trail run, Competitive 10k, Negative splits        | 310–400 XP   |
-| Tier 8: Pro            | 70–79            | Marathon prep, Altitude training, Consistency streak   | 420–500 XP   |
-| Tier 9: Champion       | 80–89            | Marathon race, 50k ultramarathon, Coach a runner       | 550–700 XP   |
-| Tier 10: Master        | 90–100           | Multi-day race, 100k+ ultra, Lead a running club       | 750–1000 XP  |
+XP is awarded based on structured tiers with increasing intensity:
 
-> Every specialization follows a similar tiered system with its own tailored goals and challenges.
+| **Tier** | **Level Range** | **Example Goals**                                    | **XP**      |
+|----------|------------------|------------------------------------------------------|-------------|
+| 1        | 0–9              | Walk 1 mile, Jog 5 min                               | 5–12 XP     |
+| 2        | 10–19            | Run 1 mile, Dynamic warm-up                          | 10–20 XP    |
+| 3        | 20–29            | Run 2 miles, 20-min run                              | 10–35 XP    |
+| 4        | 30–39            | 5 hill sprints, Trail run                            | 20–50 XP    |
+| 5        | 40–49            | 3 miles, Interval training                           | 25–65 XP    |
+| 6        | 50–59            | 4 miles, Zone 2 heart rate maintenance               | 30–85 XP    |
+| 7        | 60–69            | 5 miles, Form drills                                 | 50–110 XP   |
+| 8        | 70–79            | 6 miles, Tempo run                                   | 100–140 XP  |
+| 9        | 80–89            | 7 miles, 6x800m intervals                            | 90–170 XP   |
+| 10       | 90–100           | 10 miles, Threshold run                              | 180–220 XP  |
+
+> Streaks add bonus XP: +10% per day streak up to 100%. Completing a goal daily boosts rewards significantly.
+
+---
+
+## ⚙️ How It Works
+
+- 🧠 **XP Engine**: Calculates level-ups and streak bonuses dynamically
+- 📁 **Goal Manager**: Loads tiered goal JSON data per specialization
+- 🔐 **User Auth**: Login/registration with Flask and Flask-Login
+- 📊 **Dashboard**: Real-time level, XP, and goal completion tracking
+- 🏆 **Stats Modal**: View all-time stats, best streaks, and most-completed goals
+- 🔄 **Goal Completion**: Mark goals done to earn XP and progress levels
 
 ---
 
 ## 📦 Planned Features
 
-- 🧠 **Multi-skill Progression** (Running, Strength, Coding, Creativity, etc.)
-- ⚙️ **XP Engine**: Modular system for adding custom goals, difficulty scaling, and daily bonuses
-- 📊 **Dashboard**: Track XP, level, streaks, and lifetime stats
-- 🎯 **Goal Generator**: Smart suggestions based on your level and past activity
-- 💬 **Daily Prompts & Reflections** *(optional)* to encourage mindful progress
-- 🔁 **Offline/Manual Logging** or integration with fitness trackers
+- 🧠 Multiple Specializations (Coding, Strength, Creativity, etc.)
+- 🎯 Smart Goal Suggestions based on progress
+- 📆 Daily Logging and Offline Mode
+- ⏳ Time-based Bonuses (early AM, streak days, hard weather)
+- 🧪 Integration with wearables or APIs (future)
 
 ---
 
 ## 🛠️ Getting Started
-
-Clone the repo and begin tracking one or more specializations:
 
 ```bash
 git clone https://github.com/your-username/me-xp.git

@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+
 class Specialization:
     def __init__(self, name, goals_path, progress):
         self.name = name
@@ -9,25 +10,8 @@ class Specialization:
         self.goals_data = self._load_goals()
 
     def _load_goals(self):
-        with open(self.goals_path, 'r') as f:
+        with open(self.goals_path, "r") as f:
             return json.load(f)["tiers"]
-
-    def get_goals(self):
-        return [
-            {
-                "tier": tier["tier"],
-                "level_range": tier["level_range"],  # 👈 include this line
-                "goals": [
-                    {
-                        "name": g["name"],
-                        "xp": g["xp"],
-                        "completed": self.progress["completed"].get(g["name"], []),
-                        "streak": self.get_streak(g["name"]),
-                    }
-                    for g in tier["goals"]
-                ]
-            } for tier in self.goals_data
-        ]
 
     def get_streak(self, goal_name):
         dates = self.progress["completed"].get(goal_name, [])
@@ -45,10 +29,11 @@ class Specialization:
         return {"current": streak, "best": best}
 
     def _longest_streak(self, dates):
-        if not dates: return 0
+        if not dates:
+            return 0
         longest = current = 1
         for i in range(1, len(dates)):
-            if (dates[i].date() - dates[i-1].date()).days == 1:
+            if (dates[i].date() - dates[i - 1].date()).days == 1:
                 current += 1
                 longest = max(longest, current)
             else:
