@@ -44,25 +44,27 @@
                             data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.index }}"
                             aria-expanded="false" aria-controls="collapse-{{ loop.index }}">
                         <span id="level-label-{{ loop.index }}">
-                            {{ spec.name }} — ⭐ Level {{ spec.progress.level }}
+                            {{ spec.name }} — ⭐ Level {{ spec.level }}
                         </span>
                     </button>
                 </h2>
-                <div class="progress mb-3" style="height: 24px;">
+                <div class="progress mb-3 position-relative" style="height: 24px;">
                     <div class="progress-bar" id="xp-bar-{{ spec_index }}"
                         role="progressbar"
-                        style="width: {{ (spec.progress.xp_progress / (spec.progress.xp_end - spec.progress.xp_start) * 100) | round(2) }}%;"
-                        aria-valuenow="{{ spec.progress.xp_progress }}"
-                        aria-valuemin="0" aria-valuemax="{{ spec.progress.xp_end - spec.progress.xp_start }}">
-                        <span id="xp-label-{{ spec_index }}">{{ spec.progress.xp_progress }} / {{ spec.progress.xp_end - spec.progress.xp_start }} XP</span>
+                        style="width: {{ (spec.xp_progress / (spec.xp_end - spec.xp_start) * 100) | round(2) }}%;"
+                        aria-valuenow="{{ spec.xp_progress }}"
+                        aria-valuemax="{{ spec.xp_end - spec.xp_start }}">
+                    </div>
+                    <div id="xp-label-{{ spec_index }}" class="position-absolute w-100 text-center text-dark fw-bold" style="top: 0;">
+                        {{ spec.xp_progress }} / {{ spec.xp_end - spec.xp_start }} XP
                     </div>
                 </div>
                 <div id="collapse-{{ loop.index }}" class="accordion-collapse collapse"
                     aria-labelledby="heading-{{ loop.index }}" data-bs-parent="#specializationAccordion">
                     <div class="accordion-body">
 
-                        {% for tier in spec.get_goals() %}
-                        {% if spec.progress.level >= tier.level_range[0] %}
+                        {% for tier in spec.goals_by_tier %}
+                        {% if spec.level >= tier.level_range[0] %}
                         <div class="card bg-secondary text-white mb-2">
                             <div class="card-header">
                                 🧱 Tier {{ tier.tier }} (Lv {{ tier.level_range[0] }}–{{ tier.level_range[1] }})
@@ -147,49 +149,64 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-// Finished goal logic
-document.querySelectorAll('.complete-goal').forEach(button => {
-    button.addEventListener('click', () => {
-        const spec = button.dataset.spec;
-        const goal = button.dataset.goal;
-        const xpBar = document.getElementById(button.dataset.xpBarId);
-        const levelLabel = document.getElementById(button.dataset.levelLabelId);
-        const xpLabel = document.getElementById(button.dataset.xpLabelId);
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.complete-goal').forEach(button => {
+        button.addEventListener('click', () => {
+            const spec = button.dataset.spec;
+            const goal = button.dataset.goal;
+            const xpBar = document.getElementById(button.dataset.xpBarId);
+            const levelLabel = document.getElementById(button.dataset.levelLabelId);
+            const xpLabel = document.getElementById(button.dataset.xpLabelId);
 
-        fetch(`/complete_goal/${encodeURIComponent(spec)}/${encodeURIComponent(goal)}`, {
-            method: 'POST'
-        }).then(res => res.json()).then(data => {
-            // Update button
-            button.classList.remove('btn-light');
-            button.classList.add('btn-success');
-            button.textContent = `✔ +${data.awarded} XP`;
-            button.disabled = true;
+            fetch(`/complete_goal/${encodeURIComponent(spec)}/${encodeURIComponent(goal)}`, {
+                method: 'POST'
+            }).then(res => res.json()).then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
 
-            // Update level + XP bar
-            if (xpBar && xpLabel && levelLabel) {
-                xpBar.style.width = data.current + '%';
-                xpBar.setAttribute('aria-valuenow', data.current);
-                xpLabel.textContent = `${data.current} / 100 XP`;
+                // Update XP bar and level label
+                xpBar.style.width = ((data.current / data.target) * 100).toFixed(2) + '%';
+                xpLabel.textContent = `${data.current} / ${data.target} XP`;
                 levelLabel.textContent = `${spec} — ⭐ Level ${data.level}`;
-            }
 
-            // Update goal info (streak, multiplier)
-            const goalRow = button.closest('li');
-            if (goalRow) {
-                goalRow.querySelector('.goal-streak').textContent = data.streak.current;
-                goalRow.querySelector('.goal-streak-best').textContent = data.streak.best;
-                goalRow.querySelector('.goal-multiplier').textContent = data.multiplier.toFixed(1);
+                // Update goal info block
+                const goalRow = button.closest('li');
+                if (!goalRow) return;
 
-                // Optionally add ✔ badge next to goal
+                const infoBlock = goalRow.querySelector('.goal-info');
+                if (!infoBlock) return;
+
+                console.log("infoBlock:", infoBlock.innerHTML); // Debugging
+
+                const baseXp = parseInt(button.dataset.baseXp);
+                const adjustedXp = Math.floor(baseXp * data.multiplier);
+
+                const adjustedXpEl = infoBlock.querySelector('.goal-adjusted-xp');
+                const streakEl = infoBlock.querySelector('.goal-streak');
+                const bestStreakEl = infoBlock.querySelector('.goal-streak-best');
+                const multiplierEl = infoBlock.querySelector('.goal-multiplier');
+
+                console.log("Found adjustedXpEl:", adjustedXpEl);
+                console.log("Found streakEl:", streakEl);
+                console.log("Found bestStreakEl:", bestStreakEl);
+                console.log("Found multiplierEl:", multiplierEl);
+
+                if (adjustedXpEl) adjustedXpEl.textContent = adjustedXp;
+                if (streakEl) streakEl.textContent = data.streak.current;
+                if (bestStreakEl) bestStreakEl.textContent = data.streak.best;
+                if (multiplierEl) multiplierEl.textContent = data.multiplier.toFixed(1);
+
+                // Replace the button with a ✔ badge
                 const badge = document.createElement('span');
                 badge.className = 'badge bg-success ms-2';
                 badge.textContent = '✔ Done';
                 button.replaceWith(badge);
-            }
-
-            // Multiply next viewed xp gain
-            const adjustedXp = Math.floor(button.dataset.baseXp * data.multiplier);
-            goalRow.querySelector('.goal-adjusted-xp').textContent = adjustedXp;
+            }).catch(err => {
+                console.error("Error completing goal:", err);
+                alert("Failed to complete goal. Please try again.");
+            });
         });
     });
 });

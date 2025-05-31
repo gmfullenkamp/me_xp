@@ -54,39 +54,3 @@ class Specialization:
             else:
                 current = 1
         return longest
-
-    def complete_goal(self, goal_name):
-        xp = None
-        for tier in self.goals_data:
-            for goal in tier["goals"]:
-                if goal["name"] == goal_name:
-                    xp = goal["xp"]
-        if xp is None:
-            return 0
-
-        streak = self.get_streak(goal_name)["current"]
-        multiplier = 1.0 + 0.1 * min(streak, 10)
-        awarded_xp = int(xp * multiplier)
-
-        self.progress["xp"] += awarded_xp
-        self.progress["level"] = self.calculate_level(self.progress["xp"])
-
-        today_str = datetime.today().strftime("%Y-%m-%d")
-        self.progress["completed"].setdefault(goal_name, []).append(today_str)
-        return awarded_xp
-    
-    def get_xp_to_next_level(self, level):
-        return int(100 * (1.1 ** (level - 1)))
-    
-    @staticmethod
-    def calculate_level(xp):
-        level = 1
-        required = 100
-        total_xp = 0
-
-        while xp >= total_xp + required:
-            total_xp += required
-            level += 1
-            required = int(required * 1.1)  # Increase XP needed per level by 10%
-
-        return level

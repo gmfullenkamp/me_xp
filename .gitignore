@@ -1,8 +1,4 @@
 # Python running
 __pycache__/
-# User running logs
-data/user_progress.json
-# Py installer building
-build/
-dist/
-Me XP.spec
+# User logs
+instance/

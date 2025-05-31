@@ -1,47 +1,58 @@
-import json
-import os
-import sys
-import shutil
-
-from core.specialization import Specialization
-
-def resource_path(relative_path):
-    return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")), relative_path)
-
-def get_appdata_path(username):
-    base = os.getenv('APPDATA') or os.path.expanduser("~")
-    path = os.path.join(base, "MeXP", "users", username)
-    os.makedirs(path, exist_ok=True)
-    return os.path.join(path, "user_progress.json")
+from core.models import Specialization, GoalCompletion, db
+from datetime import datetime
 
 class UserProfile:
-    def __init__(self, username):
-        self.username = username
-        self.path = get_appdata_path(username)
-        self.data = {}
-        self._load()
-
-    def _load(self):
-        if not os.path.exists(self.path):
-            shutil.copyfile(resource_path("data/init_progress.json"), self.path)
-        with open(self.path, 'r') as f:
-            self.data = json.load(f)
-        if "specializations" not in self.data:
-            self.data["specializations"] = {}
+    def __init__(self, user):
+        self.user = user
 
     def get_specialization(self, name):
-        goal_path = resource_path(f"specializations/{name.lower()}_goals.json")
-        return Specialization(name, goal_path, self.data["specializations"])
+        spec = Specialization.query.filter_by(user_id=self.user.id, name=name).first()
+        if not spec:
+            spec = Specialization(name=name, user_id=self.user.id, xp=0, level=1)
+            db.session.add(spec)
+            db.session.commit()
+        return spec
 
-    def save_specialization(self, specialization):
-        self.data["specializations"][specialization.name] = specialization.progress
-        self._save()
-
-    def _save(self):
-        with open(self.path, 'w') as f:
-            json.dump(self.data, f, indent=2)
+    def save_goal_completion(self, spec_name, goal_name):
+        spec = self.get_specialization(spec_name)
+        today = datetime.utcnow().date()
+        exists = GoalCompletion.query.filter_by(specialization_id=spec.id, goal_name=goal_name, completed_date=today).first()
+        if not exists:
+            db.session.add(GoalCompletion(goal_name=goal_name, specialization_id=spec.id, completed_date=today))
+            db.session.commit()
 
     def reset_all_data(self):
-        self.data = {}
-        self.data["specializations"] = {}
-        self._save()
+        specs = Specialization.query.filter_by(user_id=self.user.id).all()
+        for spec in specs:
+            spec.xp = 0
+            spec.level = 1
+            GoalCompletion.query.filter_by(specialization_id=spec.id).delete()
+        db.session.commit()
+
+
+def compute_streak(completion_dates):
+    if not completion_dates:
+        return {"current": 0, "best": 0}
+
+    dates = sorted(set(datetime.strptime(d, "%Y-%m-%d").date() for d in completion_dates))
+    today = datetime.utcnow().date()
+
+    # Current streak
+    streak = 0
+    for i in range(len(dates) - 1, -1, -1):
+        if (today - dates[i]).days == streak:
+            streak += 1
+        else:
+            break
+
+    # Best streak
+    best = 1
+    run = 1
+    for i in range(1, len(dates)):
+        if (dates[i] - dates[i - 1]).days == 1:
+            run += 1
+            best = max(best, run)
+        else:
+            run = 1
+
+    return {"current": streak, "best": best}
